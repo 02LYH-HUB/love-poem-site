@@ -2,6 +2,13 @@
    PoemForTwo - Romantic Theme Styles
    ======================================== */
 
+/* ========================================
+   PoemForTwo - Chinese Classical Poetry Theme
+   ======================================== */
+
+/* --- Import Chinese Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap');
+
 /* --- Reset & Base --- */
 *, *::before, *::after {
     margin: 0;
@@ -26,7 +33,9 @@
     --radius: 16px;
     --radius-sm: 10px;
     --shadow: 0 4px 30px rgba(0,0,0,0.3);
-    --font-cn: "Noto Serif SC", "Source Han Serif CN", "STSong", serif;
+    --font-cn-title: "Ma Shan Zheng", "STKaiti", serif;
+    --font-cn: "Noto Serif SC", "ZCOOL XiaoWei", "STSong", serif;
+    --font-cn-body: "ZCOOL XiaoWei", "Noto Serif SC", serif;
     --font-en: "Georgia", "Times New Roman", serif;
 }
 
@@ -42,7 +51,8 @@ body {
     line-height: 1.7;
     background-image:
         radial-gradient(ellipse at 20% 50%, rgba(232,67,110,0.05) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 50%, rgba(212,168,83,0.05) 0%, transparent 50%);
+        radial-gradient(ellipse at 80% 50%, rgba(212,168,83,0.05) 0%, transparent 50%),
+        repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(212,168,83,0.015) 40px, rgba(212,168,83,0.015) 41px);
 }
 
 .container {
@@ -51,50 +61,146 @@ body {
     padding: 40px 20px 60px;
 }
 
+/* --- Top Ornament --- */
+.top-ornament {
+    height: 6px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--rose), var(--gold), transparent);
+    opacity: 0.4;
+}
+
 /* --- Hero --- */
 .hero {
     text-align: center;
-    padding: 60px 0 40px;
+    padding: 20px 0 36px;
+    position: relative;
+}
+
+/* --- Top Bar: Brand + Lang Toggle --- */
+.hero-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.brand-badge {
+    font-family: var(--font-cn-body);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    opacity: 0.6;
+}
+
+.lang-toggle {
+    padding: 6px 16px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-family: var(--font-en);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.lang-toggle:hover {
+    border-color: var(--gold);
+    color: var(--gold);
 }
 
 .hero-icon {
-    font-size: 64px;
-    margin-bottom: 16px;
-    animation: float 3s ease-in-out infinite;
+    display: none;
 }
 
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+/* --- Chinese Seal Mark --- */
+.seal-mark {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    border: 3px solid var(--rose);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Ma Shan Zheng", var(--font-cn-title);
+    font-size: 34px;
+    color: var(--rose);
+    transform: rotate(-3deg);
+    position: relative;
+}
+
+.seal-mark::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border: 1px solid rgba(232,67,110,0.2);
+    border-radius: 8px;
 }
 
 .hero h1 {
-    font-family: var(--font-en);
-    font-size: 42px;
-    font-weight: 700;
+    font-family: "Ma Shan Zheng", var(--font-cn-title);
+    font-size: 48px;
+    font-weight: 400;
     background: linear-gradient(135deg, var(--rose-light), var(--gold-light));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    letter-spacing: 2px;
+    letter-spacing: 4px;
+    margin-bottom: 4px;
+}
+
+.subtitle-chinese {
+    font-family: var(--font-cn-body);
+    font-size: 20px;
+    color: var(--gold);
+    margin-bottom: 8px;
+    letter-spacing: 6px;
 }
 
 .subtitle {
     color: var(--text-secondary);
-    font-size: 16px;
-    margin-top: 12px;
+    font-size: 15px;
+    margin-top: 4px;
     line-height: 1.6;
 }
 
 .lang-tag {
     display: inline-block;
     margin-top: 8px;
-    padding: 4px 14px;
+    padding: 4px 16px;
     background: rgba(212,168,83,0.12);
     border: 1px solid rgba(212,168,83,0.25);
     border-radius: 20px;
     font-size: 13px;
     color: var(--gold);
+    font-family: var(--font-cn-body);
+}
+
+/* --- Floating Quote Scroll --- */
+.quote-scroll {
+    margin-top: 28px;
+    padding: 16px 24px;
+    background: rgba(212,168,83,0.04);
+    border-left: 2px solid rgba(212,168,83,0.2);
+    border-right: 2px solid rgba(212,168,83,0.2);
+    border-radius: 4px;
+    transition: opacity 0.5s;
+}
+
+.quote-line {
+    font-family: var(--font-cn-title);
+    font-size: 24px;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    transition: opacity 0.4s ease;
+}
+
+.quote-source {
+    font-family: var(--font-cn-body);
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    transition: opacity 0.4s ease;
 }
 
 /* --- Cards --- */
@@ -111,6 +217,31 @@ body {
     font-weight: 600;
     margin-bottom: 24px;
     color: var(--text-primary);
+}
+
+/* --- Card Header Ornament --- */
+.card-header-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.ornament-line {
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+}
+
+.ornament-line:last-of-type {
+    background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+.ornament-dot {
+    color: var(--gold);
+    font-size: 10px;
 }
 
 /* --- Form Elements --- */
@@ -265,13 +396,31 @@ textarea {
     margin-bottom: 28px;
     padding-bottom: 20px;
     border-bottom: 1px solid var(--border);
+    position: relative;
+}
+
+.poem-seal {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--rose);
+    border-radius: 4px;
+    font-family: "Ma Shan Zheng", var(--font-cn-title);
+    font-size: 20px;
+    color: var(--rose);
+    line-height: 36px;
+    text-align: center;
+    margin-bottom: 12px;
+    transform: rotate(-3deg);
 }
 
 .poem-header h2 {
     margin-bottom: 8px;
-    font-family: var(--font-cn);
-    font-size: 26px;
+    font-family: "Ma Shan Zheng", var(--font-cn-title);
+    font-size: 30px;
     color: var(--gold);
+    font-weight: 400;
+    letter-spacing: 2px;
 }
 
 .poem-dedication {
@@ -286,9 +435,9 @@ textarea {
 }
 
 .chinese-verse {
-    font-family: var(--font-cn);
+    font-family: var(--font-cn-body);
     font-size: 18px;
-    line-height: 2.2;
+    line-height: 2.4;
     color: var(--text-primary);
     white-space: pre-line;
     padding: 8px 0;
@@ -346,7 +495,9 @@ textarea {
 }
 
 .paywall h3 {
-    font-size: 22px;
+    font-family: "Ma Shan Zheng", var(--font-cn-title);
+    font-size: 24px;
+    font-weight: 400;
     color: var(--gold);
     margin-bottom: 8px;
 }
@@ -416,17 +567,73 @@ textarea {
 .btn-text.hidden { display: none; }
 .btn-loading.hidden { display: none; }
 
+/* --- Footer Poem Quote --- */
+.footer-poem {
+    text-align: center;
+    padding: 32px 20px 10px;
+}
+
+.footer-poem-line {
+    font-family: var(--font-cn-title);
+    font-size: 18px;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    opacity: 0.6;
+}
+
+.footer-poem-source {
+    font-family: var(--font-cn-body);
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    opacity: 0.4;
+}
+
 /* --- Footer --- */
 .footer {
     text-align: center;
-    padding: 60px 0 20px;
+    padding: 40px 20px 30px;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.footer-logo-placeholder {
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
     color: var(--text-muted);
-    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer-company {
+    font-family: var(--font-cn-body);
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.footer-slogan {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
 }
 
 .footer-small {
-    margin-top: 4px;
     font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
 }
 
 /* --- Responsive --- */
