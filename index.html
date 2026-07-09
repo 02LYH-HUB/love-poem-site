@@ -22,7 +22,7 @@
             <div class="seal-mark">诗</div>
             <h1>PoemForTwo</h1>
             <p class="subtitle-chinese" data-i18n="heroSubtitle">为你写诗 · 以诗传情</p>
-            <p class="subtitle" data-i18n="heroDesc">讲述你的故事，AI 为你创作一首中英双语情诗</p>
+            <p class="subtitle" data-i18n="heroDesc">讲述你的故事，为你创作一首中英双语情诗</p>
 
             <div class="quote-scroll">
                 <div class="quote-line" id="quoteLine">愿得一心人，白首不相离</div>
@@ -79,10 +79,10 @@
                     <textarea id="story" rows="3" placeholder="如：我们在上海的一家咖啡馆相遇，因为共同喜欢爵士乐而结缘…"></textarea>
                 </div>
 
-                <button class="btn-primary" id="generateBtn">
+                <a class="btn-primary" id="generateBtn" href="javascript:void(0)" onclick="window._generatePoem()" style="display:inline-block;text-decoration:none;text-align:center">
                     <span class="btn-text" data-i18n="generateBtn">赋诗预览 ✨</span>
                     <span class="btn-loading hidden" data-i18n="loading">挥毫泼墨中...</span>
-                </button>
+                </a>
             </div>
         </section>
 
@@ -144,7 +144,6 @@
 
         <footer class="footer">
             <div class="footer-brand">
-                <div class="footer-logo-placeholder">logo</div>
                 <div>
                     <p class="footer-company" data-i18n="companyName">果核科技 · GuoHe Tech</p>
                     <p class="footer-slogan" data-i18n="slogan">小团队，大作为</p>

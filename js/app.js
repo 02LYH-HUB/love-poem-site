@@ -44,7 +44,7 @@
         },
         en: {
             heroSubtitle: 'Write a Poem for You',
-            heroDesc: 'Tell your story, AI creates a bilingual love poem (Chinese + English)',
+            heroDesc: 'Tell your story, get a bilingual love poem (Chinese + English)',
             formTitle: 'Create Your Poem',
             relLabel: 'Choose Relationship',
             relLove: 'In Love', relMarried: 'Married', relLongDist: 'Long Distance',
@@ -198,10 +198,14 @@
     // ========================================
     // Generate Poem
     // ========================================
-
-    generateBtn.addEventListener('click', generatePoem);
+    // --- Generate Poem ---
+    window._generatePoem = generatePoem;
+    generateBtn.addEventListener('click', function() {
+        window._generatePoem();
+    });
 
     async function generatePoem() {
+        // Validate
         if (!selectedRel) {
             relHint.textContent = currentLang === 'zh'
                 ? '⚠️ 请先选择一段关系'
