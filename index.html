@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoemForTwo · 为你写诗</title>
+    <meta name="description" content="AI-powered bilingual love poems. Tell your story, get a unique Chinese poem with English translation.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <!-- Hero -->
+        <header class="hero">
+            <div class="hero-icon">💌</div>
+            <h1>PoemForTwo</h1>
+            <p class="subtitle">Tell us your story. We'll turn it into a beautiful bilingual poem.<br>
+            <span class="lang-tag">中文情诗 · English translation</span></p>
+        </header>
+
+        <!-- Form Section -->
+        <section class="form-section" id="formSection">
+            <div class="card">
+                <h2>Create Your Poem</h2>
+
+                <div class="form-group">
+                    <label>Choose Your Relationship</label>
+                    <div class="relationship-grid" id="relationshipGrid">
+                        <button class="rel-btn" data-rel="love">💕 In Love</button>
+                        <button class="rel-btn" data-rel="married">💍 Married</button>
+                        <button class="rel-btn" data-rel="longdistance">🌏 Long Distance</button>
+                        <button class="rel-btn" data-rel="crush">💗 Crush</button>
+                        <button class="rel-btn" data-rel="engagement">💎 Engaged</button>
+                        <button class="rel-btn" data-rel="reunited">🔄 Reunited</button>
+                        <button class="rel-btn" data-rel="parent">👨‍👩‍👧 To Parents</button>
+                        <button class="rel-btn" data-rel="child">🧒 To Child</button>
+                        <button class="rel-btn" data-rel="sibling">🤝 Sibling</button>
+                        <button class="rel-btn" data-rel="grandparent">👴 To Grandparent</button>
+                        <button class="rel-btn" data-rel="bestfriend">👯 Best Friend</button>
+                        <button class="rel-btn" data-rel="soulmate">✨ Soulmate</button>
+                        <button class="rel-btn" data-rel="pet">🐾 To Pet</button>
+                        <button class="rel-btn" data-rel="self">💪 To Myself</button>
+                        <button class="rel-btn" data-rel="memorial">🕯️ In Memory</button>
+                        <button class="rel-btn" data-rel="mentor">📚 Mentor</button>
+                    </div>
+                    <p class="field-hint" id="relHint">Select a relationship type</p>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label>Your Name</label>
+                        <input type="text" id="name1" placeholder="e.g. Xiaoming" maxlength="30">
+                    </div>
+                    <div class="form-group half">
+                        <label>Their Name</label>
+                        <input type="text" id="name2" placeholder="e.g. Sarah" maxlength="30">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Story <span class="optional">(optional, but makes it more personal)</span></label>
+                    <textarea id="story" rows="3" placeholder="e.g. We met in a coffee shop in Shanghai, bonded over our love for jazz music, and now we're celebrating our first anniversary..."></textarea>
+                </div>
+
+                <button class="btn-primary" id="generateBtn">
+                    <span class="btn-text">Generate Preview ✨</span>
+                    <span class="btn-loading hidden">Writing your poem...</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Preview Section -->
+        <section class="preview-section hidden" id="previewSection">
+            <div class="card poem-card">
+                <div class="poem-header">
+                    <h2 id="poemTitle">Poem Title</h2>
+                    <p class="poem-dedication" id="poemDedication">To [Name]</p>
+                </div>
+
+                <div class="poem-body">
+                    <!-- Preview content (always visible) -->
+                    <div class="preview-content" id="previewContent">
+                        <div class="chinese-verse" id="previewChinese"></div>
+                    </div>
+
+                    <!-- Locked full content -->
+                    <div class="locked-content" id="lockedContent">
+                        <div class="blur-overlay" id="blurOverlay">
+                            <div class="chinese-verse blurred" id="blurredChinese"></div>
+                            <div class="english-verse blurred" id="blurredEnglish"></div>
+                        </div>
+
+                        <div class="paywall" id="paywall">
+                            <div class="lock-icon">🔒</div>
+                            <h3>Unlock the Full Poem</h3>
+                            <p class="pay-desc">Get the complete bilingual poem, beautifully formatted. Share it as a unique gift.</p>
+                            
+                            <!-- PayPal Button Container -->
+                            <div id="paypal-button-container"></div>
+                            <p class="pay-note">One-time payment · Instant delivery · Printable PDF</p>
+                        </div>
+                    </div>
+
+                    <!-- Revealed full content (after payment) -->
+                    <div class="full-content hidden" id="fullContent">
+                        <div class="chinese-verse" id="fullChinese"></div>
+                        <div class="divider">✦ ✦ ✦</div>
+                        <div class="english-verse" id="fullEnglish"></div>
+                        <div class="divider">— ✦ —</div>
+                        <p class="poem-signature" id="poemSignature">With love, PoemForTwo</p>
+                    </div>
+                </div>
+
+                <div class="poem-actions hidden" id="poemActions">
+                    <button class="btn-secondary" id="downloadPngBtn">📥 Download as Image</button>
+                    <button class="btn-secondary" id="downloadTxtBtn">📄 Download as Text</button>
+                    <button class="btn-outline" id="createNewBtn">Create Another Poem</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Made with ❤️ by PoemForTwo · Bilingual Love Poems · 中英双语情诗</p>
+            <p class="footer-small">© 2026 PoemForTwo</p>
+        </footer>
+    </div>
+
+    <!-- Main App -->
+    <script src="js/app.js"></script>
+</body>
+</html>

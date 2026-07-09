@@ -1,0 +1,494 @@
+/* ========================================
+   PoemForTwo - Romantic Theme Styles
+   ======================================== */
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --rose: #e8436e;
+    --rose-light: #ff6b8a;
+    --rose-dark: #c42857;
+    --gold: #d4a853;
+    --gold-light: #f0d48a;
+    --cream: #fdf6f0;
+    --cream-dark: #f5ece4;
+    --warm-bg: #1a1410;
+    --warm-card: #2a1f1a;
+    --text-primary: #f0e8e0;
+    --text-secondary: #b8a8a0;
+    --text-muted: #8a7a72;
+    --border: #3a2f2a;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --shadow: 0 4px 30px rgba(0,0,0,0.3);
+    --font-cn: "Noto Serif SC", "Source Han Serif CN", "STSong", serif;
+    --font-en: "Georgia", "Times New Roman", serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-en), var(--font-cn), serif;
+    background: var(--warm-bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.7;
+    background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(232,67,110,0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 50%, rgba(212,168,83,0.05) 0%, transparent 50%);
+}
+
+.container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+}
+
+/* --- Hero --- */
+.hero {
+    text-align: center;
+    padding: 60px 0 40px;
+}
+
+.hero-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.hero h1 {
+    font-family: var(--font-en);
+    font-size: 42px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--rose-light), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 16px;
+    margin-top: 12px;
+    line-height: 1.6;
+}
+
+.lang-tag {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 14px;
+    background: rgba(212,168,83,0.12);
+    border: 1px solid rgba(212,168,83,0.25);
+    border-radius: 20px;
+    font-size: 13px;
+    color: var(--gold);
+}
+
+/* --- Cards --- */
+.card {
+    background: var(--warm-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 36px;
+    box-shadow: var(--shadow);
+}
+
+.card h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+}
+
+/* --- Form Elements --- */
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.form-group.half {
+    flex: 1;
+}
+
+.optional {
+    font-weight: 400;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 15px;
+    font-family: var(--font-en), var(--font-cn), sans-serif;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+
+input:focus, textarea:focus {
+    border-color: var(--rose);
+    box-shadow: 0 0 0 3px rgba(232,67,110,0.15);
+}
+
+input::placeholder, textarea::placeholder {
+    color: var(--text-muted);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.field-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+}
+
+/* --- Relationship Grid --- */
+.relationship-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.rel-btn {
+    padding: 10px 4px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-family: var(--font-en), var(--font-cn), sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.rel-btn:hover {
+    background: rgba(232,67,110,0.08);
+    border-color: var(--rose);
+    color: var(--text-primary);
+}
+
+.rel-btn.selected {
+    background: rgba(232,67,110,0.15);
+    border-color: var(--rose);
+    color: var(--rose-light);
+    font-weight: 500;
+    box-shadow: 0 0 12px rgba(232,67,110,0.15);
+}
+
+/* --- Primary Button --- */
+.btn-primary {
+    width: 100%;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+    border: none;
+    border-radius: var(--radius-sm);
+    color: white;
+    font-size: 17px;
+    font-weight: 600;
+    font-family: var(--font-en), var(--font-cn), sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(232,67,110,0.35);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* --- Preview Section --- */
+.hidden {
+    display: none !important;
+}
+
+.preview-section {
+    margin-top: 40px;
+    animation: fadeUp 0.5s ease;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Poem Card --- */
+.poem-card {
+    text-align: center;
+}
+
+.poem-header {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.poem-header h2 {
+    margin-bottom: 8px;
+    font-family: var(--font-cn);
+    font-size: 26px;
+    color: var(--gold);
+}
+
+.poem-dedication {
+    font-size: 15px;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* --- Poem Verses --- */
+.poem-body {
+    min-height: 100px;
+}
+
+.chinese-verse {
+    font-family: var(--font-cn);
+    font-size: 18px;
+    line-height: 2.2;
+    color: var(--text-primary);
+    white-space: pre-line;
+    padding: 8px 0;
+}
+
+.english-verse {
+    font-family: var(--font-en);
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--text-secondary);
+    font-style: italic;
+    white-space: pre-line;
+    padding: 8px 0;
+}
+
+.divider {
+    color: var(--gold);
+    font-size: 14px;
+    padding: 16px 0;
+    letter-spacing: 6px;
+}
+
+.poem-signature {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 12px;
+}
+
+/* --- Blurred Content --- */
+.blur-overlay {
+    position: relative;
+    filter: blur(5px);
+    pointer-events: none;
+    user-select: none;
+    transition: filter 0.5s;
+}
+
+/* --- Paywall --- */
+.locked-content {
+    margin-top: 10px;
+}
+
+.paywall {
+    margin-top: 28px;
+    padding: 32px 20px;
+    background: linear-gradient(135deg, rgba(232,67,110,0.08), rgba(212,168,83,0.08));
+    border: 1px solid rgba(212,168,83,0.2);
+    border-radius: var(--radius);
+}
+
+.lock-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.paywall h3 {
+    font-size: 22px;
+    color: var(--gold);
+    margin-bottom: 8px;
+}
+
+.pay-desc {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+#paypal-button-container {
+    max-width: 280px;
+    margin: 0 auto 12px;
+}
+
+.pay-note {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* --- Poem Actions --- */
+.poem-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+}
+
+.btn-secondary {
+    padding: 12px 24px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-family: var(--font-en), var(--font-cn), sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: var(--gold);
+}
+
+.btn-outline {
+    padding: 12px 24px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: 14px;
+    font-family: var(--font-en), var(--font-cn), sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-outline:hover {
+    color: var(--text-primary);
+    border-color: var(--text-muted);
+}
+
+/* --- Loading State --- */
+.btn-text.hidden { display: none; }
+.btn-loading.hidden { display: none; }
+
+/* --- Footer --- */
+.footer {
+    text-align: center;
+    padding: 60px 0 20px;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.footer-small {
+    margin-top: 4px;
+    font-size: 12px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px 16px 40px;
+    }
+
+    .hero {
+        padding: 40px 0 28px;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .hero-icon {
+        font-size: 48px;
+    }
+
+    .card {
+        padding: 24px 20px;
+    }
+
+    .relationship-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+
+    .rel-btn {
+        font-size: 12px;
+        padding: 8px 4px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .poem-header h2 {
+        font-size: 22px;
+    }
+
+    .chinese-verse {
+        font-size: 16px;
+    }
+
+    .english-verse {
+        font-size: 14px;
+    }
+
+    .poem-actions {
+        flex-direction: column;
+    }
+
+    .btn-secondary, .btn-outline {
+        width: 100%;
+    }
+}
+
+@media (max-width: 400px) {
+    .relationship-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
