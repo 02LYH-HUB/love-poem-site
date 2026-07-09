@@ -2,6 +2,14 @@
 
 中英双语 AI 情诗生成器。选择关系、讲述故事、生成专属情诗。
 
+## 一键部署
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/02LYH-HUB/love-poem-site&project-name=poemfortwo&repository-name=love-poem-site)
+
+点击上方按钮 → 用 GitHub 登录 Vercel → Vercel 自动导入仓库 → 添加环境变量 `DEEPSEEK_API_KEY` → 部署
+
+部署后在 Vercel 项目设置 → Domains 添加 `poem.hajimijob.top`
+
 ## 技术栈
 
 - 前端：HTML + CSS + JavaScript（纯静态）
