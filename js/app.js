@@ -221,6 +221,16 @@
         // Clear any stale pending poem
         sessionStorage.removeItem('pendingPoem');
 
+        // Clear old preview content
+        previewChinese.textContent = '';
+        blurredChinese.textContent = '';
+        blurredEnglish.textContent = '';
+        blurredInterpret.textContent = '';
+        fullChinese.textContent = '';
+        fullEnglish.textContent = '';
+        fullInterpret.textContent = '';
+        poemTitle.textContent = '';
+
         // Validate
         if (!selectedRel) {
             relHint.textContent = currentLang === 'zh'
