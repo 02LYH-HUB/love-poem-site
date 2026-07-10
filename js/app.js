@@ -12,7 +12,7 @@
     const i18n = {
         zh: {
             heroSubtitle: '为你写诗 · 以诗传情',
-            heroDesc: '讲述你的故事，AI 为你创作一首中英双语情诗',
+            heroDesc: '讲述你的故事，为你创作一首中英双语情诗',
             formTitle: '赋诗一首',
             relLabel: '选择关系',
             relLove: '热恋', relMarried: '结发', relLongDist: '相思',
@@ -320,10 +320,21 @@
             currentPoem = data;
             renderPreview(data);
             renderFullContent(data);
-
             previewSection.classList.remove('hidden');
-            lockedContent.classList.remove('hidden');
+
+            // Clear selections to prevent token abuse
+            var allRelBtns = document.querySelectorAll('.rel-btn');
+            allRelBtns.forEach(function(b) { b.classList.remove('selected'); });
+            selectedRel = null;
+            name1.value = '';
+            name2.value = '';
+            story.value = '';
+            relHint.textContent = currentLang === 'zh' ? '✓ 已生成' : '✓ Generated';
+            relHint.style.color = 'var(--gold)';
+
+            // Scroll to poem preview
             fullContent.classList.add('hidden');
+            lockedContent.classList.remove('hidden');
             poemActions.classList.add('hidden');
 
             // Set LemonSqueezy buy link
