@@ -100,7 +100,7 @@ body {
     font-size: 13px;
     font-family: var(--font-en);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s ease;
 }
 
 .lang-toggle:hover {
@@ -330,7 +330,7 @@ textarea {
     font-size: 14px;
     font-family: var(--font-cn-body), var(--font-en), sans-serif;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s ease;
     text-align: center;
     line-height: 1.4;
 }
@@ -374,7 +374,7 @@ textarea {
     font-size: 13px;
     font-family: var(--font-en), var(--font-cn), sans-serif;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s ease;
     text-align: center;
     line-height: 1.3;
 }
@@ -405,7 +405,7 @@ textarea {
     font-weight: 600;
     font-family: var(--font-en), var(--font-cn), sans-serif;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s ease;
     position: relative;
 }
 
@@ -562,7 +562,7 @@ textarea {
     font-weight: 600;
     font-family: var(--font-en), var(--font-cn), sans-serif;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s ease;
     margin-bottom: 12px;
 }
 
@@ -633,7 +633,7 @@ textarea {
     font-size: 14px;
     font-family: var(--font-en), var(--font-cn), sans-serif;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s ease;
 }
 
 .btn-secondary:hover {
@@ -650,7 +650,7 @@ textarea {
     font-size: 14px;
     font-family: var(--font-en), var(--font-cn), sans-serif;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s ease;
 }
 
 .btn-outline:hover {
@@ -793,5 +793,26 @@ textarea {
 @media (max-width: 400px) {
     .relationship-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* --- Accessibility: Focus Visible --- */
+:focus-visible {
+    outline: 2px solid var(--rose);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* --- Accessibility: Reduced Motion --- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    .quote-scroll,
+    .seal-mark,
+    .fade-in {
+        animation: none !important;
     }
 }
