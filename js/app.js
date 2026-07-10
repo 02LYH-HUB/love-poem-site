@@ -218,6 +218,9 @@
     });
 
     async function generatePoem() {
+        // Clear any stale pending poem
+        sessionStorage.removeItem('pendingPoem');
+
         // Validate
         if (!selectedRel) {
             relHint.textContent = currentLang === 'zh'
