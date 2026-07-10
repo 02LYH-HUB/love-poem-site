@@ -680,6 +680,14 @@ textarea {
     margin-top: 4px;
 }
 
+.privacy-notice {
+    font-size: 11px;
+    color: var(--text-muted);
+    opacity: 0.6;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
 /* --- Responsive --- */
 @media (max-width: 600px) {
     .container {

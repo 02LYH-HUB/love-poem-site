@@ -39,6 +39,7 @@
             createNew: '再赋新诗',
             companyName: '果核科技 · GuoHe Tech',
             slogan: '小团队，大作为',
+            privacy: '🔒 您的故事仅在生成时使用，不留存不分享 · Your story is used only for generation, never stored or shared',
             copyright: '© 2026 PoemForTwo · 为你写诗 · 果核科技出品',
             namePlaceholder1: '如：明',
             namePlaceholder2: '如：莎',
@@ -75,6 +76,7 @@
             createNew: 'Write Another Poem',
             companyName: 'GuoHe Tech · 果核科技',
             slogan: 'Small team, big impact',
+            privacy: '🔒 Your story is used only for generation, never stored or shared · 不留存不分享',
             copyright: '© 2026 PoemForTwo · Bilingual Love Poems · by GuoHe Tech',
             namePlaceholder1: 'e.g. Ming',
             namePlaceholder2: 'e.g. Sarah',
@@ -261,23 +263,13 @@
             poemActions.classList.add('hidden');
 
             // Set LemonSqueezy buy link
-            var lsStoreId = localStorage.getItem('ls_store_id');
-            var lsVariantId = localStorage.getItem('ls_variant_id');
-            if (lsStoreId && lsVariantId) {
-                lsBuyBtn.href = 'https://' + lsStoreId + '.lemonsqueezy.com/checkout/buy/' + lsVariantId;
-                lsBuyBtn.target = '_blank';
-                lsBuyBtn.onclick = function() {
-                    sessionStorage.setItem('pendingPoem', JSON.stringify(currentPoem));
-                };
-            } else {
-                lsBuyBtn.href = '#';
-                lsBuyBtn.removeAttribute('target');
-                lsBuyBtn.onclick = function() {
-                    alert(currentLang === 'zh'
-                        ? '请在 LemonSqueezy 后台创建产品，然后在控制台设置：\nlocalStorage.setItem("ls_store_id", "你的店铺ID")\nlocalStorage.setItem("ls_variant_id", "你的变体ID")'
-                        : 'Create a product in LemonSqueezy, then run:\nlocalStorage.setItem("ls_store_id", "your-store-id")\nlocalStorage.setItem("ls_variant_id", "your-variant-id")');
-                };
-            }
+            var lsCheckoutUrl = 'https://pitcore.lemonsqueezy.com/checkout/buy/5ab101b8-c266-4014-974c-f55ada057086';
+            var currentPage = window.location.href.split('?')[0];
+            lsBuyBtn.href = lsCheckoutUrl + '?checkout[redirect_url]=' + encodeURIComponent(currentPage + '?success=true');
+            lsBuyBtn.target = '_blank';
+            lsBuyBtn.onclick = function() {
+                sessionStorage.setItem('pendingPoem', JSON.stringify(currentPoem));
+            };
 
             previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
