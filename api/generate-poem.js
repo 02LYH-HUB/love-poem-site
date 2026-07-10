@@ -127,13 +127,14 @@ export default async function handler(req, res) {
 2. 要有古典韵味：讲格律、有韵脚、有意境
 3. 诗题自拟，用古典诗题风格
 4. 诗的内容要融入他们的名字或故事元素
-5. 输出三个版本：
+5. **只写一首诗**，不要写多个版本
+6. 输出三个板块，用 ✦ ✦ ✦ 分隔（不要用 --- 或其他符号）：
    - 中文诗（原创古诗词）
-   - 英文翻译版（英诗风格，押韵，保持诗意，可适当意译）
-   - 英文译意版（散文风格，逐行解释中文诗的真实含义、用典和文化背景，帮助外国人理解诗的深层意思）
-6. 整体风格是：${prompt.style}
+   - 英文翻译版（英诗风格，押韵）
+   - 英文译意版（逐行解释中文诗的真实含义和用典）
+7. 整体风格是：${prompt.style}
 
-输出格式：
+输出格式严格按照：
 诗题
 ——致[对方名字]
 
@@ -142,7 +143,7 @@ export default async function handler(req, res) {
 ✦ ✦ ✦
 
 [English Translation - Poetic]
-[英诗风格翻译]
+[英诗押韵翻译]
 
 ✦ ✦ ✦
 
@@ -213,13 +214,17 @@ function parsePoem(text, name1, name2) {
         }
     }
 
-    // Split by separators: find three sections separated by ✦✦✦
-    const parts = text.split(/[✦✧]{3,}/).map(p => p.trim());
+    // Split by separators: try ✦ first, fallback to ---
+    var separator = /[✦✧]{3,}/;
+    if (!separator.test(text) && text.includes('---')) {
+        separator = /---+/;
+    }
+    const parts = text.split(separator).map(p => p.trim());
 
     if (parts.length >= 3) {
-        chinese = parts[0].replace(/^[——\-—\s]+/gm, '').replace(/^致[：:]/m, '').trim();
-        english = parts[1].replace(/^[——\-—\s✦]+/gm, '').replace(/^To\s+\S+/m, '').replace(/^\[English Translation[^\]]*\]/m, '').trim();
-        interpret = parts[2].replace(/^[——\-—\s✦]+/gm, '').replace(/^\[English Interpretation[^\]]*\]/m, '').trim();
+        chinese = parts[0].replace(/^[——\-—\s]+/gm, '').replace(/^致[：:]/m, '').replace(/^\*\*.+?\*\*/gm, '').trim();
+        english = parts[1].replace(/^[——\-—\s✦]+/gm, '').replace(/^To\s+\S+/m, '').replace(/^\[?English Translation[^\]]*\]?/m, '').replace(/^\*\*.+?\*\*/gm, '').trim();
+        interpret = parts[2].replace(/^[——\-—\s✦]+/gm, '').replace(/^\[?English Interpretation[^\]]*\]?/m, '').replace(/^\*\*.+?\*\*/gm, '').trim();
     } else if (parts.length === 2) {
         chinese = parts[0].replace(/^[——\-—\s]+/gm, '').replace(/^致[：:]/m, '').trim();
         english = parts[1].replace(/^[——\-—\s✦]+/gm, '').trim();
