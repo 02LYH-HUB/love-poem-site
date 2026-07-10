@@ -27,6 +27,9 @@
             optional: '（可选，但越详细诗越动人）',
             generateBtn: '赋诗预览 ✨',
             loading: '挥毫泼墨中...',
+            formatLabel: '选择格式',
+            formatWuyan: '5字×8句',
+            formatQiyan: '7字×8句',
             lsBuyBtn: '💳 购买全诗 · Buy $9.9',
             paywallTitle: '解锁全诗',
             paywallDesc: '$9.9 一键解锁完整中英双语诗，可下载珍藏',
@@ -64,6 +67,9 @@
             optional: '(optional, makes it more personal)',
             generateBtn: 'Generate Preview ✨',
             loading: 'Writing your poem...',
+            formatLabel: 'Poem Format',
+            formatWuyan: '5-char × 8 lines',
+            formatQiyan: '7-char × 8 lines',
             lsBuyBtn: '💳 Buy $9.9 · 购买全诗',
             paywallTitle: 'Unlock Full Poem',
             paywallDesc: '$9.9 Unlock the complete bilingual poem, download & share',
@@ -144,9 +150,10 @@
 
     // ========================================
     // State
-    // ========================================
+    // --- State ---
 
     let selectedRel = null;
+    let selectedFormat = 'wuyan';
     let currentPoem = null;
 
     // ========================================
@@ -208,14 +215,21 @@
 
     function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
+    // --- Format Grid ---
+    var formatBtns = document.querySelectorAll('.format-btn');
+    formatBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            formatBtns.forEach(function(b) { b.classList.remove('selected'); });
+            this.classList.add('selected');
+            selectedFormat = this.dataset.format;
+        });
+    });
+
     // ========================================
     // Generate Poem
     // ========================================
     // --- Generate Poem ---
     window._generatePoem = generatePoem;
-    generateBtn.addEventListener('click', function() {
-        window._generatePoem();
-    });
 
     async function generatePoem() {
         // Clear any stale pending poem
@@ -275,6 +289,7 @@
                             name1: name1.value.trim(),
                             name2: name2.value.trim(),
                             story: story.value.trim() || '',
+                            format: selectedFormat
                         }),
                         signal: controller.signal
                     });

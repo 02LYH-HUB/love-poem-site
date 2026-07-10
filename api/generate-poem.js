@@ -107,7 +107,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { relationship, name1, name2, story } = req.body;
+        const { relationship, name1, name2, story, format } = req.body;
 
         if (!relationship || !name1 || !name2) {
             return res.status(400).json({ error: 'Missing required fields: relationship, name1, name2' });
@@ -115,7 +115,13 @@ export default async function handler(req, res) {
 
         const prompt = PROMPTS[relationship] || DEFAULT_PROMPT;
 
-        // Build the user prompt
+        // Build the user prompt with format
+        var formatSpec = '';
+        if (format === 'wuyan') {
+            formatSpec = '五言绝句，每句5字，共8句（两联四句，即八句）';
+        } else {
+            formatSpec = '七言绝句，每句7字，共8句（两联四句，即八句）';
+        }
         let userPrompt = `写一首诗。\n\n关系：${prompt.style}\n风格要求：${prompt.style}\n\n诗中涉及的名字：${name1} 和 ${name2}`;
 
         if (story && story.trim()) {
@@ -123,7 +129,7 @@ export default async function handler(req, res) {
         }
 
         userPrompt += `\n\n要求：
-1. 写一首古体诗词（五言绝句、七言绝句、宋词小令等均可），8-16行
+1. 写一首${formatSpec}
 2. 要有古典韵味：讲格律、有韵脚、有意境
 3. 诗题自拟，用古典诗题风格
 4. 诗的内容要融入他们的名字或故事元素

@@ -314,6 +314,50 @@ textarea {
     margin-top: 6px;
 }
 
+/* --- Format Selector --- */
+.format-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.format-btn {
+    padding: 12px 8px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-family: var(--font-cn-body), var(--font-en), sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.format-btn:hover {
+    background: rgba(212,168,83,0.08);
+    border-color: var(--gold);
+}
+
+.format-btn.selected {
+    background: rgba(212,168,83,0.12);
+    border-color: var(--gold);
+    color: var(--gold-light);
+}
+
+.format-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 2px;
+}
+
+.format-btn.selected .format-desc {
+    color: var(--gold);
+    opacity: 0.7;
+}
+
 /* --- Relationship Grid --- */
 .relationship-grid {
     display: grid;
