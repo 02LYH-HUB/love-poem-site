@@ -476,6 +476,27 @@ textarea {
     transition: filter 0.5s;
 }
 
+/* --- LemonSqueezy Button --- */
+.btn-ls {
+    display: inline-block;
+    padding: 16px 40px;
+    background: linear-gradient(135deg, #1ee0ac, #16a085);
+    border: none;
+    border-radius: var(--radius-sm);
+    color: #fff !important;
+    font-size: 17px;
+    font-weight: 600;
+    font-family: var(--font-en), var(--font-cn), sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 12px;
+}
+
+.btn-ls:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(30,224,172,0.35);
+}
+
 /* --- Paywall --- */
 .locked-content {
     margin-top: 10px;
@@ -601,6 +622,13 @@ textarea {
     justify-content: center;
     gap: 12px;
     margin-bottom: 16px;
+}
+
+.footer-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    object-fit: contain;
 }
 
 .footer-company {

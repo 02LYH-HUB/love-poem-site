@@ -27,6 +27,7 @@
             optional: '（可选，但越详细诗越动人）',
             generateBtn: '赋诗预览 ✨',
             loading: '挥毫泼墨中...',
+            lsBuyBtn: '💳 购买全诗 · Buy $9.9',
             paywallTitle: '解锁全诗',
             paywallDesc: '$9.9 一键解锁完整中英双语诗，可下载珍藏',
             paywallNote: '一次付费 · 即刻交付',
@@ -59,6 +60,7 @@
             optional: '(optional, makes it more personal)',
             generateBtn: 'Generate Preview ✨',
             loading: 'Writing your poem...',
+            lsBuyBtn: '💳 Buy $9.9 · 购买全诗',
             paywallTitle: 'Unlock Full Poem',
             paywallDesc: '$9.9 Unlock the complete bilingual poem, download & share',
             paywallNote: 'One-time payment · Instant delivery',
@@ -125,6 +127,7 @@
     const fullContent = document.getElementById('fullContent');
     const poemActions = document.getElementById('poemActions');
     const paywall = document.getElementById('paywall');
+    const lsBuyBtn = document.getElementById('lsBuyBtn');
     const downloadPngBtn = document.getElementById('downloadPngBtn');
     const downloadTxtBtn = document.getElementById('downloadTxtBtn');
     const createNewBtn = document.getElementById('createNewBtn');
@@ -249,10 +252,24 @@
             fullContent.classList.add('hidden');
             poemActions.classList.add('hidden');
 
-            loadPayPalSDK().then(function(loaded) {
-                if (loaded) setupPayPal();
-                else setupPayPal();
-            });
+            // Set LemonSqueezy buy link
+            var lsStoreId = localStorage.getItem('ls_store_id');
+            var lsVariantId = localStorage.getItem('ls_variant_id');
+            if (lsStoreId && lsVariantId) {
+                lsBuyBtn.href = 'https://' + lsStoreId + '.lemonsqueezy.com/checkout/buy/' + lsVariantId;
+                lsBuyBtn.target = '_blank';
+                lsBuyBtn.onclick = function() {
+                    sessionStorage.setItem('pendingPoem', JSON.stringify(currentPoem));
+                };
+            } else {
+                lsBuyBtn.href = '#';
+                lsBuyBtn.removeAttribute('target');
+                lsBuyBtn.onclick = function() {
+                    alert(currentLang === 'zh'
+                        ? '请在 LemonSqueezy 后台创建产品，然后在控制台设置：\nlocalStorage.setItem("ls_store_id", "你的店铺ID")\nlocalStorage.setItem("ls_variant_id", "你的变体ID")'
+                        : 'Create a product in LemonSqueezy, then run:\nlocalStorage.setItem("ls_store_id", "your-store-id")\nlocalStorage.setItem("ls_variant_id", "your-variant-id")');
+                };
+            }
 
             previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
@@ -281,56 +298,6 @@
         fullEnglish.textContent = data.english;
         var sig = currentLang === 'zh' ? '以诗为证' : 'With love';
         poemSignature.textContent = sig + ' · ' + data.name1 + ' & ' + data.name2;
-    }
-
-    // ========================================
-    // PayPal
-    // ========================================
-
-    function loadPayPalSDK() {
-        return new Promise(function(resolve) {
-            if (typeof paypal !== 'undefined') return resolve(true);
-            var script = document.createElement('script');
-            script.src = 'https://www.paypal.com/sdk/js?client-id=sb&currency=USD';
-            script.setAttribute('data-sdk-integration-source', 'button-factory');
-            script.onload = function() { resolve(true); };
-            script.onerror = function() { resolve(false); };
-            document.body.appendChild(script);
-            setTimeout(function() { resolve(false); }, 8000);
-        });
-    }
-
-    function setupPayPal() {
-        if (typeof paypal === 'undefined') {
-            paywall.innerHTML = '<div class="lock-icon">🔒</div><h3 data-i18n="paywallTitle">解锁全诗</h3><p class="pay-desc" data-i18n="paywallDesc">$9.9 一键解锁完整中英双语诗，可下载珍藏</p><p style="color:var(--text-muted);font-size:13px;">💳 ' + (currentLang === 'zh' ? '付款功能待配置' : 'Payment setup pending') + '</p>';
-            return;
-        }
-        try {
-            paypal.Buttons({
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            description: "Bilingual Love Poem - " + (currentPoem?.title || 'Custom Poem'),
-                            amount: { value: '9.90' }
-                        }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        lockedContent.classList.add('hidden');
-                        fullContent.classList.remove('hidden');
-                        poemActions.classList.remove('hidden');
-                        fullContent.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    });
-                },
-                onError: function(err) {
-                    console.error('PayPal Error:', err);
-                    alert(currentLang === 'zh' ? '支付失败，请重试' : 'Payment failed, please try again');
-                }
-            }).render('#paypal-button-container');
-        } catch(e) {
-            console.warn('PayPal render failed:', e);
-        }
     }
 
     // ========================================
@@ -417,6 +384,31 @@
         currentPoem = null;
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // ========================================
+    // LemonSqueezy Payment Check
+    // ========================================
+
+    function checkPendingPoem() {
+        var pending = sessionStorage.getItem('pendingPoem');
+        var urlParams = new URLSearchParams(window.location.search);
+        var checkoutId = urlParams.get('checkout');
+
+        if (pending && (checkoutId || urlParams.get('success'))) {
+            sessionStorage.removeItem('pendingPoem');
+            var poem = JSON.parse(pending);
+            currentPoem = poem;
+            renderPreview(poem);
+            renderFullContent(poem);
+            previewSection.classList.remove('hidden');
+            lockedContent.classList.add('hidden');
+            fullContent.classList.remove('hidden');
+            poemActions.classList.remove('hidden');
+        }
+    }
+
+    // Check for successful payment on page load
+    checkPendingPoem();
 
     // ========================================
     // Init
