@@ -76,7 +76,8 @@
 
                 <div class="form-group">
                     <label data-i18n="storyLabel">你们的故事 <span class="optional" data-i18n="optional">（可选，但越详细诗越动人）</span></label>
-                    <textarea id="story" rows="3" placeholder="如：我们在上海的一家咖啡馆相遇，因为共同喜欢爵士乐而结缘…"></textarea>
+                    <textarea id="story" rows="3" placeholder="如：我们在上海的一家咖啡馆相遇，因为共同喜欢爵士乐而结缘…" maxlength="500"></textarea>
+                    <div class="char-count"><span id="charCount">0</span>/500</div>
                 </div>
 
                 <a class="btn-primary" id="generateBtn" href="javascript:void(0)" onclick="window._generatePoem()" style="display:inline-block;text-decoration:none;text-align:center">
@@ -109,6 +110,7 @@
                         <div class="blur-overlay" id="blurOverlay">
                             <div class="chinese-verse blurred" id="blurredChinese"></div>
                             <div class="english-verse blurred" id="blurredEnglish"></div>
+                            <div class="interpret-verse blurred" id="blurredInterpret"></div>
                         </div>
 
                         <div class="paywall" id="paywall">
@@ -123,9 +125,14 @@
                     </div>
 
                     <div class="full-content hidden" id="fullContent">
+                        <div class="section-label" data-i18n="labelChinese">中文诗 · 古韵</div>
                         <div class="chinese-verse" id="fullChinese"></div>
                         <div class="divider">✦ ✦ ✦</div>
+                        <div class="section-label" data-i18n="labelTrans">英文翻译 · Poetic Translation</div>
                         <div class="english-verse" id="fullEnglish"></div>
+                        <div class="divider">— ✦ —</div>
+                        <div class="section-label" data-i18n="labelInterpret">英文译意 · Interpretation</div>
+                        <div class="interpret-verse" id="fullInterpret"></div>
                         <div class="divider">— ✦ —</div>
                         <p class="poem-signature" id="poemSignature">以诗为证</p>
                     </div>

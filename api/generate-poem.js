@@ -127,21 +127,27 @@ export default async function handler(req, res) {
 2. 要有古典韵味：讲格律、有韵脚、有意境
 3. 诗题自拟，用古典诗题风格
 4. 诗的内容要融入他们的名字或故事元素
-5. 附上英文翻译版（意译，保持诗意，不要直译）
+5. 输出三个版本：
+   - 中文诗（原创古诗词）
+   - 英文翻译版（英诗风格，押韵，保持诗意，可适当意译）
+   - 英文译意版（散文风格，逐行解释中文诗的真实含义、用典和文化背景，帮助外国人理解诗的深层意思）
 6. 整体风格是：${prompt.style}
 
 输出格式：
 诗题
-——致 [对方名字]
+——致[对方名字]
 
 [中文诗正文]
 
 ✦ ✦ ✦
 
-[English Title]
-To [Name]
+[English Translation - Poetic]
+[英诗风格翻译]
 
-[English translation]`;
+✦ ✦ ✦
+
+[English Interpretation]
+[逐行解释，包括用典和文化背景说明]`;
 
         // Call DeepSeek
         const response = await fetch(DEEPSEEK_URL, {
@@ -191,15 +197,14 @@ To [Name]
 // ========================================
 
 function parsePoem(text, name1, name2) {
-    // Default values
     let title = '诗一首';
-    let chinese = text;
+    let chinese = '';
     let english = '';
+    let interpret = '';
 
-    // Try to extract title (first non-empty line without special chars)
     const lines = text.split('\n').filter(l => l.trim());
 
-    // Find title: first line that's not a separator or empty
+    // Extract title
     for (let i = 0; i < Math.min(5, lines.length); i++) {
         const line = lines[i].trim();
         if (line && !line.startsWith('——') && !line.startsWith('—') && !line.startsWith('✦') && !line.startsWith('*') && line.length < 40) {
@@ -208,44 +213,27 @@ function parsePoem(text, name1, name2) {
         }
     }
 
-    // Try to split Chinese and English
-    // Look for separator patterns: ✦ ✦ ✦, ---, — ✦ —, etc.
-    const sepIndex = text.search(/[✦✧\*\-—]{3,}/);
-    if (sepIndex > 0) {
-        chinese = text.substring(0, sepIndex).trim();
-        english = text.substring(sepIndex).replace(/[✦✧\*\-—\s]{3,}/g, '').trim();
+    // Split by separators: find three sections separated by ✦✦✦
+    const parts = text.split(/[✦✧]{3,}/).map(p => p.trim());
 
-        // Remove "English Title" line from english if present
-        english = english.replace(/^[A-Z][^。\n]{2,50}\n*/m, '').trim();
-        english = english.replace(/^To\s+\S+/m, '').trim();
+    if (parts.length >= 3) {
+        chinese = parts[0].replace(/^[——\-—\s]+/gm, '').replace(/^致[：:]/m, '').trim();
+        english = parts[1].replace(/^[——\-—\s✦]+/gm, '').replace(/^To\s+\S+/m, '').replace(/^\[English Translation[^\]]*\]/m, '').trim();
+        interpret = parts[2].replace(/^[——\-—\s✦]+/gm, '').replace(/^\[English Interpretation[^\]]*\]/m, '').trim();
+    } else if (parts.length === 2) {
+        chinese = parts[0].replace(/^[——\-—\s]+/gm, '').replace(/^致[：:]/m, '').trim();
+        english = parts[1].replace(/^[——\-—\s✦]+/gm, '').trim();
+        interpret = '';
     } else {
-        // Fallback: try to find English part by looking for latin text blocks
-        const paraMatch = text.match(/([A-Z][^。\n]{20,}[\s\S]*)/);
-        if (paraMatch && paraMatch[1].length > 50) {
-            const idx = text.indexOf(paraMatch[1]);
-            if (idx > 0) {
-                chinese = text.substring(0, idx).trim();
-                english = paraMatch[1].trim();
-            }
-        }
+        chinese = text.replace(/^[——\-—\s]+/gm, '').trim();
     }
-
-    // Clean up
-    chinese = chinese
-        .replace(/^[——\-—\s]+/gm, '')
-        .replace(/^致[：:]/m, '')
-        .trim();
-
-    english = english
-        .replace(/^[——\-—\s✦]+/gm, '')
-        .replace(/^To\s+\S+/m, '')
-        .trim();
 
     return {
         title: title,
         name1: name1,
         name2: name2,
-        chinese: chinese,
-        english: english || 'Translation coming soon...'
+        chinese: chinese || '...',
+        english: english || '',
+        interpret: interpret || ''
     };
 }

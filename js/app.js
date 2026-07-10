@@ -30,7 +30,10 @@
             lsBuyBtn: '💳 购买全诗 · Buy $9.9',
             paywallTitle: '解锁全诗',
             paywallDesc: '$9.9 一键解锁完整中英双语诗，可下载珍藏',
-            paywallNote: '一次付费 · 即刻交付',
+            paywallNote: '一次付费 · 即刻交付 · Instant delivery',
+            labelChinese: '中文诗 · 古韵',
+            labelTrans: '英文翻译 · Poetic Translation',
+            labelInterpret: '英文译意 · Interpretation',
             downloadPng: '下载为图片',
             downloadTxt: '下载为文本',
             createNew: '再赋新诗',
@@ -64,6 +67,9 @@
             paywallTitle: 'Unlock Full Poem',
             paywallDesc: '$9.9 Unlock the complete bilingual poem, download & share',
             paywallNote: 'One-time payment · Instant delivery',
+            labelChinese: 'Chinese Poem · 中文诗',
+            labelTrans: 'Poetic Translation · 英译',
+            labelInterpret: 'Interpretation · 译意',
             downloadPng: 'Download as PNG',
             downloadTxt: 'Download as Text',
             createNew: 'Write Another Poem',
@@ -118,8 +124,10 @@
     const previewChinese = document.getElementById('previewChinese');
     const blurredChinese = document.getElementById('blurredChinese');
     const blurredEnglish = document.getElementById('blurredEnglish');
+    const blurredInterpret = document.getElementById('blurredInterpret');
     const fullChinese = document.getElementById('fullChinese');
     const fullEnglish = document.getElementById('fullEnglish');
+    const fullInterpret = document.getElementById('fullInterpret');
     const poemTitle = document.getElementById('poemTitle');
     const poemDedication = document.getElementById('poemDedication');
     const poemSignature = document.getElementById('poemSignature');
@@ -290,15 +298,24 @@
         previewChinese.textContent = previewLines.join('\n');
         var restLines = lines.slice(4);
         blurredChinese.textContent = restLines.length > 0 ? restLines.join('\n') : '... ✦ ...';
-        blurredEnglish.textContent = data.english;
+        blurredEnglish.textContent = data.english || '';
+        blurredInterpret.textContent = data.interpret || '';
     }
 
     function renderFullContent(data) {
         fullChinese.textContent = data.chinese;
-        fullEnglish.textContent = data.english;
+        fullEnglish.textContent = data.english || '';
+        fullInterpret.textContent = data.interpret || '';
         var sig = currentLang === 'zh' ? '以诗为证' : 'With love';
         poemSignature.textContent = sig + ' · ' + data.name1 + ' & ' + data.name2;
     }
+
+    // Char count for story input
+    const storyInput = document.getElementById('story');
+    const charCount = document.getElementById('charCount');
+    storyInput.addEventListener('input', function() {
+        charCount.textContent = this.value.length;
+    });
 
     // ========================================
     // Download Functions
