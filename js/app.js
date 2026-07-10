@@ -267,8 +267,7 @@
 
             // Set LemonSqueezy buy link
             var lsCheckoutUrl = 'https://pitcore.lemonsqueezy.com/checkout/buy/5ab101b8-c266-4014-974c-f55ada057086';
-            var currentPage = window.location.href.split('?')[0];
-            lsBuyBtn.href = lsCheckoutUrl + '?checkout[redirect_url]=' + encodeURIComponent(currentPage + '?success=true');
+            lsBuyBtn.href = lsCheckoutUrl;
             lsBuyBtn.target = '_blank';
             lsBuyBtn.onclick = function() {
                 sessionStorage.setItem('pendingPoem', JSON.stringify(currentPoem));
@@ -396,31 +395,6 @@
         currentPoem = null;
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
-    // ========================================
-    // LemonSqueezy Payment Check
-    // ========================================
-
-    function checkPendingPoem() {
-        var pending = sessionStorage.getItem('pendingPoem');
-        var urlParams = new URLSearchParams(window.location.search);
-        var checkoutId = urlParams.get('checkout');
-
-        if (pending && (checkoutId || urlParams.get('success'))) {
-            sessionStorage.removeItem('pendingPoem');
-            var poem = JSON.parse(pending);
-            currentPoem = poem;
-            renderPreview(poem);
-            renderFullContent(poem);
-            previewSection.classList.remove('hidden');
-            lockedContent.classList.add('hidden');
-            fullContent.classList.remove('hidden');
-            poemActions.classList.remove('hidden');
-        }
-    }
-
-    // Check for successful payment on page load
-    checkPendingPoem();
 
     // ========================================
     // Init
