@@ -127,14 +127,9 @@ export default async function handler(req, res) {
 2. 要有古典韵味：讲格律、有韵脚、有意境
 3. 诗题自拟，用古典诗题风格
 4. 诗的内容要融入他们的名字或故事元素
-5. **只写一首诗**，不要写多个版本
-6. 输出三个板块，用 ✦ ✦ ✦ 分隔（不要用 --- 或其他符号）：
-   - 中文诗（原创古诗词）
-   - 英文翻译版（英诗风格，押韵）
-   - 英文译意版（逐行解释中文诗的真实含义和用典）
-7. 整体风格是：${prompt.style}
+5. **只写一首诗**，不要写多个版本或附加注释
+6. 必须且严格按照以下格式输出，用 ✦ ✦ ✦ 分隔三个部分：
 
-输出格式严格按照：
 诗题
 ——致[对方名字]
 
@@ -143,12 +138,14 @@ export default async function handler(req, res) {
 ✦ ✦ ✦
 
 [English Translation - Poetic]
-[英诗押韵翻译]
+（英诗风格，押韵，翻译上面的中文诗）
 
 ✦ ✦ ✦
 
 [English Interpretation]
-[逐行解释，包括用典和文化背景说明]`;
+（逐行用英文解释中文诗的含义，如有用典需说明）
+
+注意：不要写注释，不要写版本说明，严格按照上述格式。`;
 
         // Call DeepSeek
         const response = await fetch(DEEPSEEK_URL, {
@@ -214,8 +211,8 @@ function parsePoem(text, name1, name2) {
         }
     }
 
-    // Split by separators: try ✦ first, fallback to ---
-    var separator = /[✦✧]{3,}/;
+    // Split by separators: try ✦ first (with optional spaces), fallback to ---
+    var separator = /[✦✧][\s]*[✦✧][\s]*[✦✧]/;
     if (!separator.test(text) && text.includes('---')) {
         separator = /---+/;
     }

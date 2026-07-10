@@ -33,17 +33,13 @@ def call_deepseek(rel, n1, n2, story):
 他们的故事：{story or '无'}
 
 要求：
-1. 古体诗词（五言绝句、七言绝句、宋词小令等均可）
+1. 写一首古体诗词（五言绝句、七言绝句、宋词小令等均可），8-16行
 2. 要有格律、韵脚、意境
-3. 诗题自拟
+3. 诗题自拟，用古典诗题风格
 4. 融入他们的名字或故事元素
-5. 输出三个版本：
-   - 中文诗
-   - 英文翻译版（英诗风格，押韵）
-   - 英文译意版（散文风格，解释用典和文化背景）
-6. 风格：{p['s']}
+5. **只写一首诗**，不要写多个版本或附加注释
+6. 必须严格按照以下格式输出，用 ✦ ✦ ✦ 分隔三个部分：
 
-输出格式：
 诗题
 ——致[对方名字]
 
@@ -52,22 +48,54 @@ def call_deepseek(rel, n1, n2, story):
 ✦ ✦ ✦
 
 [English Translation - Poetic]
-[英诗押韵翻译]
+（英诗风格，押韵，翻译上面的中文诗）
 
 ✦ ✦ ✦
 
 [English Interpretation]
-[逐行解释，包括用典和文化背景]'''
+（逐行用英文解释中文诗的含义，如有用典需说明）
+
+注意：不要写注释，不要写版本说明，严格按照上述格式。
+风格：{p['s']}'''
     ctx = ssl.create_default_context(); ctx.check_hostname = False; ctx.verify_mode = ssl.CERT_NONE
     req = urllib.request.Request('https://api.deepseek.com/v1/chat/completions',
         data=json.dumps({'model':'deepseek-chat','messages':[{'role':'system','content':p['sys']},{'role':'user','content':user}],'temperature':0.8,'max_tokens':2000}).encode(),
         headers={'Authorization':f'Bearer {API_KEY}','Content-Type':'application/json'}, method='POST')
     with urllib.request.urlopen(req, context=ctx, timeout=30) as resp:
         text = json.loads(resp.read())['choices'][0]['message']['content']
-    parts = text.split('✦')
-    cn = parts[0].strip() if parts else text
-    en = parts[1].strip() if len(parts) > 1 else ''
-    interp = parts[2].strip() if len(parts) > 2 else ''
+    parts = text.split('✦ ✦ ✦')
+    if len(parts) < 2:
+        parts = text.split('---')
+    
+    if len(parts) >= 3:
+        cn = parts[0].strip() if parts else text
+        en = parts[1].strip() if len(parts) > 1 else ''
+        interp = parts[2].strip() if len(parts) > 2 else ''
+    elif len(parts) == 2:
+        cn = parts[0].strip()
+        en = parts[1].strip()
+        interp = ''
+    else:
+        # No separator found - whole text is the poem
+        cn = text.strip()
+        # Try to generate English translation by calling DeepSeek again
+        try:
+            ctx = ssl.create_default_context(); ctx.check_hostname = False; ctx.verify_mode = ssl.CERT_NONE
+            en_req = urllib.request.Request('https://api.deepseek.com/v1/chat/completions',
+                data=json.dumps({'model':'deepseek-chat','messages':[
+                    {'role':'system','content':'You are a translator of classical Chinese poetry.'},
+                    {'role':'user','content':f'Translate this Chinese poem into English. Keep the poetic style and rhyme. Also provide a line-by-line prose interpretation:\n\n{cn}'}
+                ],'temperature':0.5,'max_tokens':1500}).encode(),
+                headers={'Authorization':f'Bearer {API_KEY}','Content-Type':'application/json'}, method='POST')
+            with urllib.request.urlopen(en_req, context=ctx, timeout=15) as resp:
+                en_text = json.loads(resp.read())['choices'][0]['message']['content']
+            # Try to split translation from interpretation
+            en_parts = en_text.split('Interpretation', 1) if 'Interpretation' in en_text else [en_text, '']
+            en = en_parts[0].strip() if len(en_parts) > 0 else en_text
+            interp = 'Interpretation' + en_parts[1].strip() if len(en_parts) > 1 else ''
+        except:
+            en = ''
+            interp = ''
     lines = cn.split('\n')
     title = '诗一首'
     for l in lines[:8]:

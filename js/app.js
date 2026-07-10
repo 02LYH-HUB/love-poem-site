@@ -248,24 +248,60 @@
         btnText.classList.add('hidden');
         btnLoading.classList.remove('hidden');
 
-        try {
-            const response = await fetch('/api/generate-poem', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    relationship: selectedRel,
-                    name1: name1.value.trim(),
-                    name2: name2.value.trim(),
-                    story: story.value.trim() || '',
-                })
-            });
+        // Loading animation: rotating messages
+        var loadingMsgs = currentLang === 'zh'
+            ? ['构思意境...', '推敲格律...', '润色用典...', '翻译英文...', '生成完成！']
+            : ['Capturing the mood...', 'Refining the rhythm...', 'Polishing the allusions...', 'Translating...', 'Done!'];
+        var msgIdx = 0;
+        var loadingInterval = setInterval(function() {
+            msgIdx = (msgIdx + 1) % loadingMsgs.length;
+            btnLoading.textContent = loadingMsgs[msgIdx];
+        }, 3000);
 
-            if (!response.ok) {
-                const err = await response.json().catch(function() { return { error: 'Unknown error' }; });
-                throw new Error(err.error || 'HTTP ' + response.status);
+        // Abort controller for timeout
+        var controller = new AbortController();
+        var timeoutId = setTimeout(function() { controller.abort(); }, 45000);
+
+        try {
+            // Retry logic: up to 2 attempts
+            var lastError = null;
+            for (var attempt = 0; attempt < 2; attempt++) {
+                try {
+                    var response = await fetch('/api/generate-poem', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            relationship: selectedRel,
+                            name1: name1.value.trim(),
+                            name2: name2.value.trim(),
+                            story: story.value.trim() || '',
+                        }),
+                        signal: controller.signal
+                    });
+
+                    if (response.ok) {
+                        var data = await response.json();
+                        lastError = null;
+                        break; // Success, exit retry loop
+                    }
+                    lastError = 'HTTP ' + response.status;
+                } catch (e) {
+                    lastError = e.message || 'Network error';
+                    if (e.name === 'AbortError') {
+                        lastError = currentLang === 'zh' ? '请求超时，请重试' : 'Request timeout, please retry';
+                        break;
+                    }
+                }
+                // Wait before retry (exponential backoff)
+                if (attempt < 1) await new Promise(function(r) { setTimeout(r, 1500); });
             }
 
-            const data = await response.json();
+            clearTimeout(timeoutId);
+            clearInterval(loadingInterval);
+
+            if (lastError) {
+                throw new Error(lastError);
+            }
             currentPoem = data;
             renderPreview(data);
             renderFullContent(data);
