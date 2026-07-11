@@ -472,6 +472,9 @@
     // Init
     // ========================================
 
-    applyLang('zh');
+    applyLang('en');
+
+    // Also toggle the lang button text
+    langToggle.textContent = '中文';
 
 })();
