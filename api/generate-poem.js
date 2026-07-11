@@ -118,9 +118,9 @@ export default async function handler(req, res) {
         // Build the user prompt with format
         var formatSpec = '';
         if (format === 'wuyan') {
-            formatSpec = '五言绝句，每句5字，共8句（两联四句，即八句）';
+            formatSpec = '五言律诗，每句5字，共8句';
         } else {
-            formatSpec = '七言绝句，每句7字，共8句（两联四句，即八句）';
+            formatSpec = '七言律诗，每句7字，共8句';
         }
         let userPrompt = `写一首诗。\n\n关系：${prompt.style}\n风格要求：${prompt.style}\n\n诗中涉及的名字：${name1} 和 ${name2}`;
 
@@ -151,7 +151,7 @@ export default async function handler(req, res) {
 [English Interpretation]
 （逐行用英文解释中文诗的含义，如有用典需说明）
 
-注意：不要写注释，不要写版本说明，严格按照上述格式。`;
+注意：不要写注释，不要写版本说明，严格按照上述格式。输出时直接写内容，不要写"[English Translation - Poetic]"这类标签，直接写英文翻译内容。`;
 
         // Call DeepSeek
         const response = await fetch(DEEPSEEK_URL, {
@@ -226,8 +226,18 @@ function parsePoem(text, name1, name2) {
 
     if (parts.length >= 3) {
         chinese = parts[0].replace(/^[——\-—\s]+/gm, '').replace(/^致[：:]/m, '').replace(/^\*\*.+?\*\*/gm, '').trim();
-        english = parts[1].replace(/^[——\-—\s✦]+/gm, '').replace(/^To\s+\S+/m, '').replace(/^\[?English Translation[^\]]*\]?/m, '').replace(/^\*\*.+?\*\*/gm, '').trim();
-        interpret = parts[2].replace(/^[——\-—\s✦]+/gm, '').replace(/^\[?English Interpretation[^\]]*\]?/m, '').replace(/^\*\*.+?\*\*/gm, '').trim();
+        english = parts[1]
+            .replace(/^[——\-—\s✦]+/gm, '')
+            .replace(/^To\s+\S+/m, '')
+            .replace(/^\[?English Translation[^\]]*\]?[\s]*/gm, '')
+            .replace(/^\*\*.+?\*\*/gm, '')
+            .replace(/^[\[\(]?[A-Z][a-z]+ [A-Z][a-z]+[ -].*[\]]?$/gm, '')
+            .trim();
+        interpret = parts[2]
+            .replace(/^[——\-—\s✦]+/gm, '')
+            .replace(/^\[?English Interpretation[^\]]*\]?[\s]*/gm, '')
+            .replace(/^\*\*.+?\*\*/gm, '')
+            .trim();
     } else if (parts.length === 2) {
         chinese = parts[0].replace(/^[——\-—\s]+/gm, '').replace(/^致[：:]/m, '').trim();
         english = parts[1].replace(/^[——\-—\s✦]+/gm, '').trim();
