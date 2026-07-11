@@ -151,7 +151,7 @@ export default async function handler(req, res) {
 [English Interpretation]
 （逐行用英文解释中文诗的含义，如有用典需说明）
 
-注意：不要写注释，不要写版本说明，严格按照上述格式。输出时直接写内容，不要写"[English Translation - Poetic]"这类标签，直接写英文翻译内容。`;
+注意：不要写注释，不要写版本说明，严格按照上述格式。输出时直接写内容，不要写"[English Translation - Poetic]"这类标签，直接写英文翻译内容。必须用✦ ✦ ✦分隔三个部分，否则无法解析。`;
 
         // Call DeepSeek
         const response = await fetch(DEEPSEEK_URL, {
@@ -222,7 +222,18 @@ function parsePoem(text, name1, name2) {
     if (!separator.test(text) && text.includes('---')) {
         separator = /---+/;
     }
-    const parts = text.split(separator).map(p => p.trim());
+    var parts = text.split(separator).map(function(p) { return p.trim(); });
+
+    // Fallback: if no separator found, try to detect English sections
+    if (parts.length < 2 && text.match(/[a-zA-Z]{20,}/)) {
+        // Has substantial English text - split by double newline or common patterns
+        var sections = text.split(/\n\n\n+/);
+        if (sections.length >= 3) {
+            parts = sections;
+        } else if (sections.length === 2) {
+            parts = sections;
+        }
+    }
 
     if (parts.length >= 3) {
         chinese = parts[0].replace(/^[——\-—\s]+/gm, '').replace(/^致[：:]/m, '').replace(/^\*\*.+?\*\*/gm, '').trim();
