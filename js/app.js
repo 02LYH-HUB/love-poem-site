@@ -30,9 +30,9 @@
             formatLabel: '选择格式',
             formatWuyan: '5字×8句',
             formatQiyan: '7字×8句',
-            lsBuyBtn: '💳 购买 · Buy $9.9',
-            paywallTitle: '解锁译意与下载',
-            paywallDesc: '$9.9 一键解锁逐行译意 + 高清下载。一次付费，永久拥有。',
+            lsBuyBtn: '💳 购买全诗 · Buy $9.9',
+            paywallTitle: '解锁完整诗篇',
+            paywallDesc: '$9.9 解锁完整中英双语诗 + 逐行译意 + 高清下载',
             paywallNote: '一次付费 · 即刻交付 · Instant delivery',
             labelChinese: '中文诗 · 古韵',
             labelTrans: '英文翻译 · Poetic Translation',
@@ -70,9 +70,9 @@
             formatLabel: 'Poem Format',
             formatWuyan: '5-char × 8 lines',
             formatQiyan: '7-char × 8 lines',
-            lsBuyBtn: '💳 Buy $9.9 · Unlock',
-            paywallTitle: 'Unlock Interpretation & Download',
-            paywallDesc: 'Get line-by-line cultural interpretation + HD download. One payment, forever yours.',
+            lsBuyBtn: '💳 Buy $9.9 · Unlock Full Poem',
+            paywallTitle: 'Unlock Full Poem',
+            paywallDesc: '$9.9 Unlock the complete bilingual poem + interpretation + HD download',
             paywallNote: 'One-time payment · Instant delivery',
             labelChinese: 'Chinese Poem · 中文诗',
             labelTrans: 'Poetic Translation · 英译',
@@ -130,6 +130,7 @@
     const btnLoading = document.querySelector('.btn-loading');
     const previewSection = document.getElementById('previewSection');
     const previewChinese = document.getElementById('previewChinese');
+    const previewEnglish = document.getElementById('previewEnglish');
     const blurredChinese = document.getElementById('blurredChinese');
     const blurredEnglish = document.getElementById('blurredEnglish');
     const blurredInterpret = document.getElementById('blurredInterpret');
@@ -238,6 +239,8 @@
         // Clear old preview content
         previewChinese.textContent = '';
         previewEnglish.textContent = '';
+        blurredChinese.textContent = '';
+        blurredEnglish.textContent = '';
         blurredInterpret.textContent = '';
         fullChinese.textContent = '';
         fullEnglish.textContent = '';
@@ -358,10 +361,15 @@
     function renderPreview(data) {
         poemTitle.textContent = data.title;
         poemDedication.textContent = (currentLang === 'zh' ? '——致 ' : '— To ') + (data.name2 || '');
-        // Full Chinese poem + English translation visible for free
-        previewChinese.textContent = data.chinese;
-        previewEnglish.textContent = data.english || '';
-        // Only interpretation is blurred (locked)
+        // Show first 4 Chinese lines + first 4 English lines free
+        var cnLines = data.chinese.split('\n').filter(function(l) { return l.trim(); });
+        var enLines = (data.english || '').split('\n').filter(function(l) { return l.trim(); });
+        var half = Math.min(4, Math.ceil(cnLines.length / 2));
+        previewChinese.textContent = cnLines.slice(0, half).join('\n');
+        previewEnglish.textContent = enLines.slice(0, half).join('\n');
+        // Blur remaining lines + interpretation
+        blurredChinese.textContent = cnLines.slice(half).join('\n');
+        blurredEnglish.textContent = enLines.slice(half).join('\n');
         blurredInterpret.textContent = data.interpret || '';
     }
 
