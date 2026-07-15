@@ -11,8 +11,9 @@
 
     const i18n = {
         zh: {
-            heroSubtitle: '为你写诗 · 以诗传情',
-            heroDesc: '讲述你的故事，为你创作一首中英双语情诗',
+            heroMain: '把你的故事写成一首中国古诗词',
+            heroDesc: '受中国古典诗词启发，为你创作一首专属的中英双语诗',
+            moreRel: '更多关系',
             formTitle: '赋诗一首',
             relLabel: '选择关系',
             relLove: '热恋', relMarried: '结发', relLongDist: '相思',
@@ -52,8 +53,9 @@
             poemDedication: '——致',
         },
         en: {
-            heroSubtitle: 'Write a Poem for You',
-            heroDesc: 'Tell your story, get a bilingual love poem (Chinese + English)',
+            heroMain: 'Turn Your Story into a Beautiful Chinese Poem',
+            heroDesc: 'Personalized bilingual poems inspired by classical Chinese verse',
+            moreRel: 'More',
             formTitle: 'Create Your Poem',
             relLabel: 'Choose Relationship',
             relLove: 'In Love', relMarried: 'Married', relLongDist: 'Long Distance',
@@ -166,32 +168,36 @@
     // ========================================
 
     const quotes = [
-        { line: '愿得一心人，白首不相离', source: '—— 卓文君《白头吟》' },
-        { line: '两情若是久长时，又岂在朝朝暮暮', source: '—— 秦观《鹊桥仙》' },
-        { line: '曾经沧海难为水，除却巫山不是云', source: '—— 元稹《离思》' },
-        { line: '此情可待成追忆，只是当时已惘然', source: '—— 李商隐《锦瑟》' },
-        { line: '在天愿作比翼鸟，在地愿为连理枝', source: '—— 白居易《长恨歌》' },
-        { line: '玲珑骰子安红豆，入骨相思知不知', source: '—— 温庭筠《南歌子》' },
-        { line: '衣带渐宽终不悔，为伊消得人憔悴', source: '—— 柳永《蝶恋花》' },
-        { line: '只愿君心似我心，定不负相思意', source: '—— 李之仪《卜算子》' },
-        { line: '海上生明月，天涯共此时', source: '—— 张九龄《望月怀远》' },
-        { line: '执子之手，与子偕老', source: '—— 《诗经·邶风·击鼓》' },
+        { line: '愿得一心人，白首不相离', source: '—— 卓文君《白头吟》', en: '"May we remain devoted until our hair turns white"' },
+        { line: '两情若是久长时，又岂在朝朝暮暮', source: '—— 秦观《鹊桥仙》', en: '"If love endures, why must we cling to every dawn and dusk?"' },
+        { line: '曾经沧海难为水，除却巫山不是云', source: '—— 元稹《离思》', en: '"No water can match the sea I\'ve crossed, no cloud the peak I\'ve known."' },
+        { line: '此情可待成追忆，只是当时已惘然', source: '—— 李商隐《锦瑟》', en: '"This longing waits to be recalled in vain, only to find it was lost in the haze back then."' },
+        { line: '在天愿作比翼鸟，在地愿为连理枝', source: '—— 白居易《长恨歌》', en: '"In heaven, may we be twin-winged birds; on earth, entwined branches."' },
+        { line: '玲珑骰子安红豆，入骨相思知不知', source: '—— 温庭筠《南歌子》', en: '"A carved die with red beans inside — this lovesickness etched into bone, do you know?"' },
+        { line: '衣带渐宽终不悔，为伊消得人憔悴', source: '—— 柳永《蝶恋花》', en: '"My belt grows loose, yet I regret it not — for you, I fade away without a thought."' },
+        { line: '只愿君心似我心，定不负相思意', source: '—— 李之仪《卜算子》', en: '"If only your heart could be like mine — forever true, never to betray this love\'s design."' },
+        { line: '海上生明月，天涯共此时', source: '—— 张九龄《望月怀远》', en: '"The bright moon rises from the vast sea — though far apart, we share this moment."' },
+        { line: '执子之手，与子偕老', source: '—— 《诗经·邶风·击鼓》', en: '"Take your hand in mine, and grow old together with time."' },
     ];
 
     let quoteIndex = 0;
     const quoteLine = document.getElementById('quoteLine');
     const quoteSource = document.getElementById('quoteSource');
+    const quoteEn = document.getElementById('quoteEn');
 
     function rotateQuote() {
         if (!quoteLine) return;
         quoteIndex = (quoteIndex + 1) % quotes.length;
         quoteLine.style.opacity = '0';
         quoteSource.style.opacity = '0';
+        if (quoteEn) quoteEn.style.opacity = '0';
         setTimeout(function() {
             quoteLine.textContent = quotes[quoteIndex].line;
             quoteSource.textContent = quotes[quoteIndex].source;
+            if (quoteEn) quoteEn.textContent = quotes[quoteIndex].en || '';
             quoteLine.style.opacity = '1';
             quoteSource.style.opacity = '1';
+            if (quoteEn) quoteEn.style.opacity = '1';
         }, 400);
     }
 
@@ -497,6 +503,25 @@
 
     // Also toggle the lang button text
     langToggle.textContent = '中文';
+
+    // Toggle More relations
+    window.toggleMoreRelations = function() {
+        var hidden = document.querySelectorAll('.hidden-rel');
+        var btn = document.getElementById('relMoreBtn');
+        var expanded = btn.classList.toggle('expanded');
+        hidden.forEach(function(el) {
+            el.style.display = expanded ? 'inline-flex' : 'none';
+        });
+        btn.innerHTML = expanded
+            ? '− <span data-i18n="moreRel">Less</span>'
+            : '+ <span data-i18n="moreRel">More</span>';
+        // Re-apply i18n to the button
+        var lang = currentLang;
+        var dict = i18n[lang];
+        if (dict && dict.moreRel) {
+            btn.querySelector('[data-i18n]').textContent = expanded ? 'Less' : dict.moreRel;
+        }
+    };
 
     // Check for pending poem (after LemonSqueezy payment)
     var pending = sessionStorage.getItem('pendingPoem');

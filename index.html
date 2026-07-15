@@ -89,12 +89,13 @@
 
             <div class="seal-mark">诗</div>
             <h1>PoemForTwo</h1>
-            <p class="subtitle-chinese" data-i18n="heroSubtitle">为你写诗 · 以诗传情</p>
-            <p class="subtitle" data-i18n="heroDesc">讲述你的故事，为你创作一首中英双语情诗</p>
+            <p class="subtitle-main" data-i18n="heroMain">Turn Your Story into a Beautiful Chinese Poem</p>
+            <p class="subtitle" data-i18n="heroDesc">Personalized bilingual poems inspired by classical Chinese verse</p>
 
             <div class="quote-scroll">
                 <div class="quote-line" id="quoteLine">愿得一心人，白首不相离</div>
                 <div class="quote-source" id="quoteSource">—— 卓文君《白头吟》</div>
+                <div class="quote-en" id="quoteEn">"May we remain devoted until our hair turns white"</div>
             </div>
         </header>
 
@@ -106,33 +107,34 @@
                     <span class="ornament-dot">✦</span>
                     <span class="ornament-line"></span>
                 </div>
-                <h2 data-i18n="formTitle">赋诗一首</h2>
+                <h2 data-i18n="formTitle">Create Your Poem</h2>
 
                 <div class="form-group">
-                    <label data-i18n="relLabel">选择关系</label>
+                    <div class="step-label"><span class="step-num">1</span> <span data-i18n="relLabel">Choose Your Relationship</span></div>
                     <div class="relationship-grid" id="relationshipGrid">
-                        <button class="rel-btn" data-rel="love">💕 <span data-i18n="relLove">热恋</span></button>
-                        <button class="rel-btn" data-rel="married">💍 <span data-i18n="relMarried">结发</span></button>
-                        <button class="rel-btn" data-rel="longdistance">🌏 <span data-i18n="relLongDist">相思</span></button>
-                        <button class="rel-btn" data-rel="crush">💗 <span data-i18n="relCrush">倾心</span></button>
-                        <button class="rel-btn" data-rel="engagement">💎 <span data-i18n="relEngaged">定盟</span></button>
-                        <button class="rel-btn" data-rel="reunited">🔄 <span data-i18n="relReunited">重逢</span></button>
-                        <button class="rel-btn" data-rel="parent">👨‍👩‍👧 <span data-i18n="relParent">孝亲</span></button>
-                        <button class="rel-btn" data-rel="child">🧒 <span data-i18n="relChild">舐犊</span></button>
-                        <button class="rel-btn" data-rel="sibling">🤝 <span data-i18n="relSibling">手足</span></button>
-                        <button class="rel-btn" data-rel="grandparent">👴 <span data-i18n="relGrandparent">尊长</span></button>
-                        <button class="rel-btn" data-rel="bestfriend">👯 <span data-i18n="relBestfriend">知音</span></button>
-                        <button class="rel-btn" data-rel="soulmate">✨ <span data-i18n="relSoulmate">知己</span></button>
-                        <button class="rel-btn" data-rel="pet">🐾 <span data-i18n="relPet">灵宠</span></button>
-                        <button class="rel-btn" data-rel="self">💪 <span data-i18n="relSelf">自勉</span></button>
-                        <button class="rel-btn" data-rel="memorial">🕯️ <span data-i18n="relMemorial">悼念</span></button>
-                        <button class="rel-btn" data-rel="mentor">📚 <span data-i18n="relMentor">师恩</span></button>
+                        <button class="rel-btn visible" data-rel="love">💕 <span data-i18n="relLove">In Love</span></button>
+                        <button class="rel-btn visible" data-rel="married">💍 <span data-i18n="relMarried">Married</span></button>
+                        <button class="rel-btn visible" data-rel="longdistance">🌏 <span data-i18n="relLongDist">Long Distance</span></button>
+                        <button class="rel-btn visible" data-rel="crush">💗 <span data-i18n="relCrush">Crush</span></button>
+                        <button class="rel-btn visible" data-rel="engagement">💎 <span data-i18n="relEngaged">Engaged</span></button>
+                        <button class="rel-btn visible" data-rel="bestfriend">👯 <span data-i18n="relBestfriend">Best Friend</span></button>
+                        <button class="rel-btn visible" data-rel="parent">👨‍👩‍👧 <span data-i18n="relParent">To Parents</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="reunited">🔄 <span data-i18n="relReunited">Reunited</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="child">🧒 <span data-i18n="relChild">To Child</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="sibling">🤝 <span data-i18n="relSibling">Sibling</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="grandparent">👴 <span data-i18n="relGrandparent">Grandparent</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="soulmate">✨ <span data-i18n="relSoulmate">Soulmate</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="pet">🐾 <span data-i18n="relPet">To Pet</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="self">💪 <span data-i18n="relSelf">To Myself</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="memorial">🕯️ <span data-i18n="relMemorial">In Memory</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="mentor">📚 <span data-i18n="relMentor">Mentor</span></button>
+                        <button class="rel-btn-more" id="relMoreBtn" onclick="toggleMoreRelations()">+ <span data-i18n="moreRel">More</span></button>
                     </div>
-                    <p class="field-hint" id="relHint" data-i18n="relHint">请选择一段关系</p>
+                    <p class="field-hint" id="relHint" data-i18n="relHint">Select a relationship</p>
                 </div>
 
                 <div class="form-group">
-                    <label data-i18n="formatLabel">选择格式</label>
+                    <div class="step-label"><span class="step-num">2</span> <span data-i18n="formatLabel">Choose Poem Style</span></div>
                     <div class="format-grid">
                         <button class="format-btn selected" data-format="wuyan">五言律诗<br><span class="format-desc" data-i18n="formatWuyan">5字×8句</span></button>
                         <button class="format-btn" data-format="qiyan">七言律诗<br><span class="format-desc" data-i18n="formatQiyan">7字×8句</span></button>
@@ -141,24 +143,24 @@
 
                 <div class="form-row">
                     <div class="form-group half">
-                        <label data-i18n="yourNameLabel">你的名字</label>
-                        <input type="text" id="name1" placeholder="如：明" maxlength="30">
+                        <div class="step-label"><span class="step-num">3</span> <span data-i18n="yourNameLabel">Your Name</span></div>
+                        <input type="text" id="name1" placeholder="e.g. James" maxlength="30">
                     </div>
                     <div class="form-group half">
-                        <label data-i18n="theirNameLabel">对方的名字</label>
-                        <input type="text" id="name2" placeholder="如：莎" maxlength="30">
+                        <label data-i18n="theirNameLabel">Their Name</label>
+                        <input type="text" id="name2" placeholder="e.g. Sarah" maxlength="30">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label data-i18n="storyLabel">你们的故事 <span class="optional" data-i18n="optional">（可选，但越详细诗越动人）</span></label>
-                    <textarea id="story" rows="3" placeholder="如：我们在上海的一家咖啡馆相遇，因为共同喜欢爵士乐而结缘…" maxlength="500"></textarea>
+                    <div class="step-label"><span class="step-num">4</span> <span data-i18n="storyLabel">Tell Your Story</span></div>
+                    <textarea id="story" rows="3" placeholder="Describe a meaningful memory, a special moment, or why this person matters to you..." maxlength="500"></textarea>
                     <div class="char-count"><span id="charCount">0</span>/500</div>
                 </div>
 
                 <a class="btn-primary" id="generateBtn" href="javascript:void(0)" onclick="window._generatePoem()" style="display:inline-block;text-decoration:none;text-align:center">
-                    <span class="btn-text" data-i18n="generateBtn">赋诗预览 ✨</span>
-                    <span class="btn-loading hidden" data-i18n="loading">挥毫泼墨中...</span>
+                    <span class="btn-text" data-i18n="generateBtn">Create My Poem ✨</span>
+                    <span class="btn-loading hidden" data-i18n="loading">Creating...</span>
                 </a>
             </div>
         </section>
