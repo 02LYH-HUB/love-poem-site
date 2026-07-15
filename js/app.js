@@ -39,6 +39,7 @@
             labelInterpret: '英文译意 · Interpretation',
             downloadPng: '下载为图片',
             downloadTxt: '下载为文本',
+            personalNote: '✍️ 添加手写寄语（可选）',
             createNew: '再赋新诗',
             companyName: '果核科技 · GuoHe Tech',
             slogan: '小团队，大作为',
@@ -79,6 +80,7 @@
             labelInterpret: 'Interpretation · 译意',
             downloadPng: 'Download as PNG',
             downloadTxt: 'Download as Text',
+            personalNote: '✍️ Add a handwritten note (optional)',
             createNew: 'Write Another Poem',
             companyName: 'GuoHe Tech · 果核科技',
             slogan: 'Small team, big impact',
@@ -140,6 +142,8 @@
     const poemTitle = document.getElementById('poemTitle');
     const poemDedication = document.getElementById('poemDedication');
     const poemSignature = document.getElementById('poemSignature');
+    const noteSection = document.getElementById('noteSection');
+    const personalNote = document.getElementById('personalNote');
     const lockedContent = document.getElementById('lockedContent');
     const fullContent = document.getElementById('fullContent');
     const poemActions = document.getElementById('poemActions');
@@ -433,7 +437,19 @@
         currentPoem.english.split('\n').forEach(function(line) {
             if (line.trim()) { ctx.fillText(line.trim(), canvas.width/2, y); y += 35; }
         });
-        y += 40;
+        y += 50;
+        // Handwritten note
+        var note = document.getElementById('personalNote');
+        if (note && note.value.trim()) {
+            var noteLines = note.value.trim().split('\n');
+            ctx.fillStyle = 'rgba(212,168,83,0.6)';
+            ctx.font = '26px "Caveat", "Georgia", cursive';
+            y += 10;
+            noteLines.forEach(function(line) {
+                if (line.trim()) { ctx.fillText(line.trim(), canvas.width/2, y); y += 36; }
+            });
+            y += 10;
+        }
         ctx.fillStyle = '#8a7a72';
         ctx.font = '14px "Georgia", serif';
         ctx.fillText('PoemForTwo · ' + (currentLang === 'zh' ? '为你写诗' : 'Bilingual Love Poem'), canvas.width/2, y);
@@ -481,5 +497,22 @@
 
     // Also toggle the lang button text
     langToggle.textContent = '中文';
+
+    // Check for pending poem (after LemonSqueezy payment)
+    var pending = sessionStorage.getItem('pendingPoem');
+    if (pending) {
+        try {
+            var poem = JSON.parse(pending);
+            currentPoem = poem;
+            renderFullContent(poem);
+            previewSection.classList.remove('hidden');
+            lockedContent.classList.add('hidden');
+            fullContent.classList.remove('hidden');
+            noteSection.classList.remove('hidden');
+            poemActions.classList.remove('hidden');
+            previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            sessionStorage.removeItem('pendingPoem');
+        } catch(e) {}
+    }
 
 })();

@@ -684,6 +684,46 @@ textarea {
     opacity: 0.4;
 }
 
+/* --- Handwritten Note --- */
+.note-section {
+    margin-top: 20px;
+    text-align: center;
+}
+.note-label {
+    display: block;
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+.note-textarea {
+    width: 100%;
+    max-width: 400px;
+    background: rgba(255,255,255,.04);
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-family: 'Caveat', 'Georgia', cursive;
+    font-size: 22px;
+    line-height: 1.4;
+    resize: none;
+    outline: none;
+    transition: .3s;
+    text-align: center;
+}
+.note-textarea:focus {
+    border-color: rgba(0,212,255,.3);
+    box-shadow: 0 0 20px rgba(0,212,255,.05);
+    background: rgba(255,255,255,.06);
+}
+.note-textarea::placeholder {
+    font-family: 'Caveat', 'Georgia', cursive;
+    font-size: 22px;
+    color: rgba(255,255,255,.15);
+    text-align: center;
+}
+
 /* --- Footer --- */
 .footer {
     text-align: center;
