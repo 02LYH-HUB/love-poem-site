@@ -13,6 +13,9 @@
         zh: {
             heroMain: '把你的故事写成一首中国古诗词',
             heroDesc: '受中国古典诗词启发，为你创作一首专属的中英双语诗',
+            examplesTitle: '真实故事 · 真实诗作',
+            examplesSub: '看看 PoemForTwo 能写什么——每一首都独一无二',
+            example1Badge: '💕 热恋',
             moreRel: '更多关系',
             formTitle: '赋诗一首',
             relLabel: '选择关系',
@@ -55,6 +58,9 @@
         en: {
             heroMain: 'Turn Your Story into a Beautiful Chinese Poem',
             heroDesc: 'Personalized bilingual poems inspired by classical Chinese verse',
+            examplesTitle: 'Real Poems from Real Stories',
+            examplesSub: 'See what PoemForTwo creates — every poem is unique, based on your story',
+            example1Badge: '💕 In Love',
             moreRel: 'More',
             formTitle: 'Create Your Poem',
             relLabel: 'Choose Relationship',
