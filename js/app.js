@@ -334,14 +334,6 @@
             renderFullContent(data);
             previewSection.classList.remove('hidden');
 
-            // TEST MODE: if URL has ?test=1, unlock everything
-            if (window.location.search.indexOf('test=1') >= 0) {
-                lockedContent.classList.add('hidden');
-                fullContent.classList.remove('hidden');
-                noteSection.classList.remove('hidden');
-                poemActions.classList.remove('hidden');
-            }
-
             // Clear selections to prevent token abuse
             var allRelBtns = document.querySelectorAll('.rel-btn');
             allRelBtns.forEach(function(b) { b.classList.remove('selected'); });
@@ -352,10 +344,17 @@
             relHint.textContent = currentLang === 'zh' ? '✓ 已生成' : '✓ Generated';
             relHint.style.color = 'var(--gold)';
 
-            // Scroll to poem preview
-            fullContent.classList.add('hidden');
-            lockedContent.classList.remove('hidden');
-            poemActions.classList.add('hidden');
+            // Scroll to poem preview (skip if test mode)
+            if (window.location.search.indexOf('test=1') < 0) {
+                fullContent.classList.add('hidden');
+                lockedContent.classList.remove('hidden');
+                poemActions.classList.add('hidden');
+            } else {
+                lockedContent.classList.add('hidden');
+                fullContent.classList.remove('hidden');
+                noteSection.classList.remove('hidden');
+                poemActions.classList.remove('hidden');
+            }
 
             // Set LemonSqueezy buy link
             var lsCheckoutUrl = 'https://pitcore.lemonsqueezy.com/checkout/buy/5ab101b8-c266-4014-974c-f55ada057086';
