@@ -367,12 +367,17 @@
                 poemActions.classList.remove('hidden');
             }
 
-            // Set LemonSqueezy buy link
+            // Set PayPal buy link
             var lsCheckoutUrl = 'https://paypal.me/guohe666/1';
             lsBuyBtn.href = lsCheckoutUrl;
             lsBuyBtn.target = '_blank';
             lsBuyBtn.onclick = function() {
+                // Store poem in case of payment return (manual verification)
                 sessionStorage.setItem('pendingPoem', JSON.stringify(currentPoem));
+                setTimeout(function() {
+                    // Clear pending after 1 hour
+                    sessionStorage.removeItem('pendingPoem');
+                }, 3600000);
             };
 
             previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
