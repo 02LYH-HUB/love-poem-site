@@ -368,7 +368,7 @@
             }
 
             // Set LemonSqueezy buy link
-            var lsCheckoutUrl = 'https://paypal.me/guohe666/9.9';
+            var lsCheckoutUrl = 'https://paypal.me/guohe666/1';
             lsBuyBtn.href = lsCheckoutUrl;
             lsBuyBtn.target = '_blank';
             lsBuyBtn.onclick = function() {
