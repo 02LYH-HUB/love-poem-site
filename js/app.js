@@ -334,6 +334,14 @@
             renderFullContent(data);
             previewSection.classList.remove('hidden');
 
+            // TEST MODE: if URL has ?test=1, unlock everything
+            if (window.location.search.indexOf('test=1') >= 0) {
+                lockedContent.classList.add('hidden');
+                fullContent.classList.remove('hidden');
+                noteSection.classList.remove('hidden');
+                poemActions.classList.remove('hidden');
+            }
+
             // Clear selections to prevent token abuse
             var allRelBtns = document.querySelectorAll('.rel-btn');
             allRelBtns.forEach(function(b) { b.classList.remove('selected'); });
