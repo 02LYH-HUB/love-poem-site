@@ -100,17 +100,18 @@
         </header>
 
         <!-- Examples -->
-        <section class="examples-section">
+        <section class="examples-section" id="examplesSection">
             <div class="card">
                 <div class="card-header-ornament">
                     <span class="ornament-line"></span>
                     <span class="ornament-dot">✦</span>
                     <span class="ornament-line"></span>
                 </div>
-                <h2 data-i18n="examplesTitle">Real Poems from Real Stories</h2>
-                <p class="examples-sub" data-i18n="examplesSub">See what PoemForTwo creates — every poem is unique, based on your story</p>
-
-                <div class="example-cards">
+                <button class="examples-toggle" id="examplesToggle" onclick="toggleExamples()">
+                    <span class="examples-toggle-icon">▶</span>
+                    <span data-i18n="examplesToggleText">See Examples</span>
+                </button>
+                <div class="examples-body hidden" id="examplesBody">
                     <div class="example-card">
                         <div class="example-badge" data-i18n="example1Badge">💕 In Love</div>
                         <div class="example-title">《书窗情缘》</div>

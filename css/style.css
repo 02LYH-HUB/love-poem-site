@@ -724,19 +724,36 @@ textarea {
     max-width: 720px;
     margin: 0 auto 30px;
 }
-.examples-section h2 {
-    text-align: center;
-    font-size: 24px;
-    color: var(--gold-light);
-    margin-bottom: 6px;
-    font-weight: 400;
-    letter-spacing: 2px;
+.examples-toggle {
+    width: 100%;
+    background: none;
+    border: 1px dashed rgba(212,168,83,.2);
+    border-radius: 10px;
+    padding: 14px 20px;
+    color: var(--gold);
+    font-size: 15px;
+    font-family: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: .3s;
 }
-.examples-sub {
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 14px;
-    margin-bottom: 28px;
+.examples-toggle:hover {
+    border-color: var(--gold);
+    background: rgba(212,168,83,.04);
+}
+.examples-toggle-icon {
+    display: inline-block;
+    transition: transform .3s;
+    font-size: 11px;
+}
+.examples-toggle.expanded .examples-toggle-icon {
+    transform: rotate(90deg);
+}
+.examples-body {
+    margin-top: 24px;
 }
 .example-cards {
     display: flex;

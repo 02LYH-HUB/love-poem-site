@@ -17,6 +17,7 @@
             examplesSub: '看看 PoemForTwo 能写什么——每一首都独一无二',
             example1Badge: '💕 热恋',
             moreRel: '更多关系',
+            examplesToggleText: '看看示例作品 ▶',
             formTitle: '赋诗一首',
             relLabel: '选择关系',
             relLove: '热恋', relMarried: '结发', relLongDist: '相思',
@@ -62,6 +63,7 @@
             examplesSub: 'See what PoemForTwo creates — every poem is unique, based on your story',
             example1Badge: '💕 In Love',
             moreRel: 'More',
+            examplesToggleText: 'See Examples ▶',
             formTitle: 'Create Your Poem',
             relLabel: 'Choose Relationship',
             relLove: 'In Love', relMarried: 'Married', relLongDist: 'Long Distance',
@@ -520,7 +522,6 @@
     // Also toggle the lang button text
     langToggle.textContent = '中文';
 
-    // Toggle More relations
     window.toggleMoreRelations = function() {
         var hidden = document.querySelectorAll('.hidden-rel');
         var btn = document.getElementById('relMoreBtn');
@@ -537,6 +538,16 @@
         if (dict && dict.moreRel) {
             btn.querySelector('[data-i18n]').textContent = expanded ? 'Less' : dict.moreRel;
         }
+    };
+
+    // Toggle examples
+    window.toggleExamples = function() {
+        var body = document.getElementById('examplesBody');
+        var btn = document.getElementById('examplesToggle');
+        body.classList.toggle('hidden');
+        btn.classList.toggle('expanded');
+        var icon = btn.querySelector('.examples-toggle-icon');
+        if (icon) icon.textContent = body.classList.contains('hidden') ? '▶' : '▼';
     };
 
     // Check for pending poem (after LemonSqueezy payment)
