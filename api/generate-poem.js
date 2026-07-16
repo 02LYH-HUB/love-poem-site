@@ -150,7 +150,7 @@ export default async function handler(req, res) {
 ✦ ✦ ✦
 
 [English Interpretation]
-（逐行用英文解释中文诗的含义，如有用典需说明）
+（用英文逐行或分段解释诗的含义和意境。不要做自我评价，不要说"没有用典""忠实于故事"这类元评论，只说诗的内容本身）
 
 注意：不要写注释，不要写版本说明，严格按照上述格式。输出时直接写内容，不要写"[English Translation - Poetic]"这类标签，直接写英文翻译内容。必须用✦ ✦ ✦分隔三个部分，否则无法解析。`;
 
