@@ -133,6 +133,7 @@
     const btnText = document.querySelector('.btn-text');
     const btnLoading = document.querySelector('.btn-loading');
     const previewSection = document.getElementById('previewSection');
+    const previewContent = document.getElementById('previewContent');
     const previewChinese = document.getElementById('previewChinese');
     const previewEnglish = document.getElementById('previewEnglish');
     const blurredChinese = document.getElementById('blurredChinese');
@@ -346,10 +347,12 @@
 
             // Scroll to poem preview (skip if test mode)
             if (window.location.search.indexOf('test=1') < 0) {
+                previewContent.classList.remove('hidden');
                 fullContent.classList.add('hidden');
                 lockedContent.classList.remove('hidden');
                 poemActions.classList.add('hidden');
             } else {
+                previewContent.classList.add('hidden');
                 lockedContent.classList.add('hidden');
                 fullContent.classList.remove('hidden');
                 noteSection.classList.remove('hidden');
