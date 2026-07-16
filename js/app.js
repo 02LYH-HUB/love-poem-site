@@ -368,7 +368,7 @@
             }
 
             // Set LemonSqueezy buy link
-            var lsCheckoutUrl = 'https://pitcore.lemonsqueezy.com/checkout/buy/5ab101b8-c266-4014-974c-f55ada057086';
+            var lsCheckoutUrl = 'https://paypal.me/guohe666/9.9';
             lsBuyBtn.href = lsCheckoutUrl;
             lsBuyBtn.target = '_blank';
             lsBuyBtn.onclick = function() {
