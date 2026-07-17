@@ -87,12 +87,12 @@
                 <button class="lang-toggle" id="langToggle" onclick="toggleLang()">EN</button>
             </div>
 
-            <div class="seal-mark">诗</div>
-            <h1>PoemForTwo</h1>
-            <p class="subtitle-main" data-i18n="heroMain">Turn Your Story into a Beautiful Chinese Poem</p>
-            <p class="subtitle" data-i18n="heroDesc">Personalized bilingual poems inspired by classical Chinese verse</p>
+            <div class="seal-mark animate-fade-rise">诗</div>
+            <h1 class="animate-fade-rise">PoemForTwo</h1>
+            <p class="subtitle-main animate-fade-rise-delay" data-i18n="heroMain">Turn Your Story into a Beautiful Chinese Poem</p>
+            <p class="subtitle animate-fade-rise-delay" data-i18n="heroDesc">Personalized bilingual poems inspired by classical Chinese verse</p>
 
-            <div class="quote-scroll">
+            <div class="quote-scroll animate-fade-rise-delay-2" id="quoteScroll">
                 <div class="quote-line" id="quoteLine">愿得一心人，白首不相离</div>
                 <div class="quote-source" id="quoteSource">—— 卓文君《白头吟》</div>
                 <div class="quote-en" id="quoteEn">"May we remain devoted until our hair turns white"</div>
@@ -152,16 +152,17 @@
                         <button class="rel-btn" data-rel="crush">💗 <span data-i18n="relCrush">Crush</span></button>
                         <button class="rel-btn" data-rel="engagement">💎 <span data-i18n="relEngaged">Engaged</span></button>
                         <button class="rel-btn" data-rel="reunited">🔄 <span data-i18n="relReunited">Reunited</span></button>
-                        <button class="rel-btn" data-rel="parent">👨‍👩‍👧 <span data-i18n="relParent">To Parents</span></button>
-                        <button class="rel-btn" data-rel="child">🧒 <span data-i18n="relChild">To Child</span></button>
-                        <button class="rel-btn" data-rel="sibling">🤝 <span data-i18n="relSibling">Sibling</span></button>
-                        <button class="rel-btn" data-rel="grandparent">👴 <span data-i18n="relGrandparent">Grandparent</span></button>
-                        <button class="rel-btn" data-rel="bestfriend">👯 <span data-i18n="relBestfriend">Best Friend</span></button>
-                        <button class="rel-btn" data-rel="soulmate">✨ <span data-i18n="relSoulmate">Soulmate</span></button>
-                        <button class="rel-btn" data-rel="pet">🐾 <span data-i18n="relPet">To Pet</span></button>
-                        <button class="rel-btn" data-rel="self">💪 <span data-i18n="relSelf">To Myself</span></button>
-                        <button class="rel-btn" data-rel="memorial">🕯️ <span data-i18n="relMemorial">In Memory</span></button>
-                        <button class="rel-btn" data-rel="mentor">📚 <span data-i18n="relMentor">Mentor</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="parent">👨‍👩‍👧 <span data-i18n="relParent">To Parents</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="child">🧒 <span data-i18n="relChild">To Child</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="sibling">🤝 <span data-i18n="relSibling">Sibling</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="grandparent">👴 <span data-i18n="relGrandparent">Grandparent</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="bestfriend">👯 <span data-i18n="relBestfriend">Best Friend</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="soulmate">✨ <span data-i18n="relSoulmate">Soulmate</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="pet">🐾 <span data-i18n="relPet">To Pet</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="self">💪 <span data-i18n="relSelf">To Myself</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="memorial">🕯️ <span data-i18n="relMemorial">In Memory</span></button>
+                        <button class="rel-btn hidden-rel" data-rel="mentor">📚 <span data-i18n="relMentor">Mentor</span></button>
+                        <button class="rel-btn-more" id="relMoreBtn" onclick="window._toggleMoreRel()"><span data-i18n="moreRel">More</span> <span class="rel-arrow">▼</span></button>
                     </div>
                     <p class="field-hint" id="relHint" data-i18n="relHint">Select a relationship</p>
                 </div>
@@ -292,6 +293,6 @@
         </footer>
     </div>
 
-    <script src="js/app.min.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

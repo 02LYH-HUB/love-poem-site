@@ -11,7 +11,7 @@
 
     const i18n = {
         zh: {
-            heroMain: '把你的故事写成一首中国古诗词',
+            heroMain: '把你的故事，写成一首中国古诗词——专属于你',
             heroDesc: '受中国古典诗词启发，为你创作一首专属的中英双语诗',
             examplesTitle: '真实故事 · 真实诗作',
             examplesSub: '看看 PoemForTwo 能写什么——每一首都独一无二',
@@ -50,14 +50,14 @@
             slogan: '小团队，大作为',
             privacy: '🔒 您的故事仅在生成时使用，不留存不分享 · Your story is used only for generation, never stored or shared',
             copyright: '© 2026 PoemForTwo · 为你写诗 · 果核科技出品',
-            namePlaceholder1: '如：明',
-            namePlaceholder2: '如：莎',
-            storyPlaceholder: '如：我们在上海的一家咖啡馆相遇，因为共同喜欢爵士乐而结缘…',
+            namePlaceholder1: '你的名字，如：明',
+            namePlaceholder2: '对方的名字，如：莎',
+            storyPlaceholder: '讲述一个难忘的瞬间：你们在哪里相遇？有什么共同的回忆？越详细，诗越动人……',
             poemSignature: '以诗为证',
             poemDedication: '——致',
         },
         en: {
-            heroMain: 'Turn Your Story into a Beautiful Chinese Poem',
+            heroMain: 'Your Story, Crafted into a Chinese Poem — Unique to You',
             heroDesc: 'Personalized bilingual poems inspired by classical Chinese verse',
             examplesTitle: 'Real Poems from Real Stories',
             examplesSub: 'See what PoemForTwo creates — every poem is unique, based on your story',
@@ -96,9 +96,9 @@
             slogan: 'Small team, big impact',
             privacy: '🔒 Your story is used only for generation, never stored or shared · 不留存不分享',
             copyright: '© 2026 PoemForTwo · Bilingual Love Poems · by GuoHe Tech',
-            namePlaceholder1: 'e.g. Ming',
-            namePlaceholder2: 'e.g. Sarah',
-            storyPlaceholder: 'e.g. We met in a coffee shop in Shanghai, bonded over jazz music...',
+            namePlaceholder1: 'Your name, e.g. Ming',
+            namePlaceholder2: 'Their name, e.g. Sarah',
+            storyPlaceholder: 'Describe a moment that matters: where did you meet? What memory makes you smile? The more you share, the more personal the poem...',
             poemSignature: 'With love',
             poemDedication: '— To',
         }
@@ -124,6 +124,12 @@
         document.getElementById('name1').placeholder = dict.namePlaceholder1;
         document.getElementById('name2').placeholder = dict.namePlaceholder2;
         document.getElementById('story').placeholder = dict.storyPlaceholder;
+        // Update "More" button text if not expanded
+        var moreBtn = document.getElementById('relMoreBtn');
+        if (moreBtn && moreBtn.dataset.expanded !== '1') {
+            var moreSpan = moreBtn.querySelector('[data-i18n="moreRel"]');
+            if (moreSpan) moreSpan.textContent = dict.moreRel || 'More';
+        }
         // HTML lang
         document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
     }
@@ -233,7 +239,35 @@
         });
     });
 
-    function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+    function capitalize(s) { return s.charAt(0).toLowerCase() === s.charAt(0).toUpperCase() ? s : s.charAt(0).toUpperCase() + s.slice(1); }
+
+    // --- Relationship "More" toggle ---
+    window._toggleMoreRel = function() {
+        var hiddenRels = document.querySelectorAll('.rel-btn.hidden-rel');
+        var btn = document.getElementById('relMoreBtn');
+        var isHidden = hiddenRels[0] && hiddenRels[0].style.display === 'none';
+        hiddenRels.forEach(function(el) {
+            el.style.display = isHidden ? '' : 'none';
+        });
+        if (btn) {
+            var arrow = btn.querySelector('.rel-arrow');
+            if (arrow) arrow.textContent = isHidden ? '▲' : '▼';
+            var span = btn.querySelector('[data-i18n="moreRel"]');
+            if (span) {
+                var dict = i18n[currentLang] || i18n.en;
+                span.textContent = isHidden
+                    ? (currentLang === 'zh' ? '收起' : 'Less')
+                    : (dict.moreRel || 'More');
+            }
+        }
+        // Store state for lang switch
+        btn.dataset.expanded = isHidden ? '1' : '0';
+    };
+    // Init: hide extra rels on load
+    (function() {
+        var hiddenRels = document.querySelectorAll('.rel-btn.hidden-rel');
+        hiddenRels.forEach(function(el) { el.style.display = 'none'; });
+    })();
 
     // --- Format Grid ---
     var formatBtns = document.querySelectorAll('.format-btn');
